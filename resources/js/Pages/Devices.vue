@@ -23,7 +23,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                     </div>
                     <button @click="openModal()"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New
-                        Post</button>
+                        Device</button>
                     <table class="table-fixed w-full">
                         <thead>
                             <tr class="bg-gray-100">
@@ -82,14 +82,58 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                                                 }}</div>
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput2"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-                                                <textarea
+                                                <label for="exampleFormControlInput3"
+                                                    class="block text-gray-700 text-sm font-bold mb-2">ip:</label>
+                                                <input type="text"
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput2" v-model="form.description"
-                                                    placeholder="Enter description"></textarea>
-                                                <div v-if="$page.props.errors.description" class="text-red-500">{{
-                                                $page.errors.description[0]
+                                                    id="exampleFormControlInput3" placeholder="Enter ip address"
+                                                    v-model="form.ip">
+                                                <div v-if="$page.props.errors.ip" class="text-red-500">{{
+                                                $page.errors.ip[0]
+                                                }}</div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="exampleFormControlInput4"
+                                                    class="block text-gray-700 text-sm font-bold mb-2">user_id:</label>
+                                                <input type="text"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="exampleFormControlInput4" readonly
+                                                    v-model="$page.props.user.id">
+                                                <div v-if="$page.props.errors.user_id" class="text-red-500">{{
+                                                $page.errors.user_id[0]
+                                                }}</div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="exampleFormControlInput5"
+                                                    class="block text-gray-700 text-sm font-bold mb-2">ikev2:</label>
+                                                <input type="checkbox"
+                                                    class="shadow appearance-none border rounded py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="exampleFormControlInput5"
+                                                    v-model="form.ikev2">
+                                                <div v-if="$page.props.errors.ikev2" class="text-red-500">{{
+                                                $page.errors.ikev2[0]
+                                                }}</div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="exampleFormControlInput6"
+                                                    class="block text-gray-700 text-sm font-bold mb-2">user:</label>
+                                                <input type="text"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="exampleFormControlInput6" placeholder="Enter user"
+                                                    v-model="form.user">
+                                                <div v-if="$page.props.errors.user" class="text-red-500">{{
+                                                $page.errors.user[0]
+                                                }}</div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="exampleFormControlInput7"
+                                                    class="block text-gray-700 text-sm font-bold mb-2">password:</label>
+                                                <input type="text"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="exampleFormControlInput7" placeholder="Enter password"
+                                                    v-model="form.password">
+                                                <div v-if="$page.props.errors.password" class="text-red-500">{{
+                                                $page.errors.password[0]
                                                 }}</div>
                                             </div>
                                         </div>
@@ -135,11 +179,11 @@ export default {
             isOpen: false,
             form: {
                 name: null,
-        ip: null,
-        user_id: null,
-        ikev2: null,
-        user: null,
-        password: null,
+                ip: null,
+                user_id: null,
+                ikev2: null,
+                user: null,
+                password: null,
             },
         }
     },
@@ -159,7 +203,7 @@ export default {
             }
         },
         save: function (data) {
-            this.$inertia.post('/products', data)
+            this.$inertia.post('/devices', data)
             this.reset();
             this.closeModal();
             this.editMode = false;
