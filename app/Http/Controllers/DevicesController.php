@@ -31,10 +31,11 @@ class DevicesController extends Controller
     {
         Validator::make($request->all(), [
             'name' => ['required'],
-            'description' => ['required'],
+            'ip' => ['required'],
         ])->validate();
-
-        Device::create($request->all());
+        $device = $request->all();
+        $device['user_id'] = auth()->user()->id;
+        Device::create($device);
 
         return redirect()->back()
             ->with('message', 'Device Created Successfully.');
@@ -49,7 +50,7 @@ class DevicesController extends Controller
     {
         Validator::make($request->all(), [
             'name' => ['required'],
-            'description' => ['required'],
+            'ip' => ['required'],
         ])->validate();
 
         if ($request->has('id')) {

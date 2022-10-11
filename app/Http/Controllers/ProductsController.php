@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
-  
+
+
 class ProductsController extends Controller
 {
     //
@@ -32,10 +33,25 @@ class ProductsController extends Controller
         Validator::make($request->all(), [
             'name' => ['required'],
             'description' => ['required'],
-        ])->validate();
+            'tags' => ['required'],
+            'price' => ['required|numeric'],
+            'user_id' => ['max:255'],
+            'image' => ['required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'],
+        ]);
 
-        Product::create($request->all());
-
+        $product = new Product();
+        $product = $request->all();
+        $product['user_id'] = auth()->user()->id;
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $product['image'] = "$profileImage";
+        }
+        dd($profileImage);
+        //$product->save();
+        Product::create($product);
+        
         return redirect()->back()
             ->with('message', 'Product Created Successfully.');
     }
