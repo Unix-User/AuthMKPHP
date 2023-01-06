@@ -40,7 +40,7 @@ class ProductsController extends Controller
         ]);
 
         $product = new Product();
-        $product = $request->all();
+        
         $product['user_id'] = auth()->user()->id;
         if ($image = $request->file('image')) {
             $destinationPath = 'images/';
@@ -49,6 +49,7 @@ class ProductsController extends Controller
             $product['image'] = "$profileImage";
         }
         // dd($profileImage);
+        $product = $request->all();
         $product->save();
         Product::create($product);
         
