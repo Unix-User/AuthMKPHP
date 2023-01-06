@@ -49,8 +49,8 @@ class ProductsController extends Controller
             $product['image'] = "$profileImage";
         }
         // dd($profileImage);
-        $product = $request->all();
-        $product->save();
+        $product->save(); // salvar o objeto antes de sobrescrevê-lo
+        $product = $request->all(); // sobrescrever o objeto com um array
         Product::create($product);
         
         return redirect()->back()
