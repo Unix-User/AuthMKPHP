@@ -48,8 +48,8 @@ class ProductsController extends Controller
             $image->move($destinationPath, $profileImage);
             $product['image'] = "$profileImage";
         }
-        dd($profileImage);
-        //$product->save();
+        // dd($profileImage);
+        $product->save();
         Product::create($product);
         
         return redirect()->back()
