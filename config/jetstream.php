@@ -76,6 +76,6 @@ return [
     |
     */
 
-    'profile_photo_disk' => 'local',
+    'profile_photo_disk' => 'images',
 
 ];

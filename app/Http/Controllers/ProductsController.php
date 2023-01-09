@@ -30,6 +30,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         Validator::make($request->all(), [
             'name' => ['required'],
             'description' => ['required'],
@@ -42,17 +43,24 @@ class ProductsController extends Controller
         $product = new Product();
         
         $product['user_id'] = auth()->user()->id;
-        if ($image = $request->file('image')) {
-            $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $product['image'] = "$profileImage";
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            if (!is_dir($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $name);
+            $product->image = $name;
         }
-        // dd($profileImage);
-        $product->save(); // salvar o objeto antes de sobrescrevê-lo
-        $product = $request->all(); // sobrescrever o objeto com um array
-        Product::create($product);
         
+        $product['name'] = $request->input('name');
+        $product['description'] = $request->input('description');
+        $product['tags'] = $request->input('tags');
+        $product['price'] = $request->input('price');
+
+        $product->save();
+
         return redirect()->back()
             ->with('message', 'Product Created Successfully.');
     }
