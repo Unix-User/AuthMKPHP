@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\UsersController;
 use Inertia\Inertia;
 
 /*
@@ -36,4 +37,5 @@ Route::middleware([
     })->name('dashboard');
     Route::resource('products', ProductsController::class);
     Route::resource('devices', DevicesController::class);
+    Route::resource('users', UsersController::class);
 });

@@ -40,7 +40,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                             <tr v-for="row in data">
                                 <td class="border px-4 py-2">{{ row.id }}</td>
                                 <td class="border px-4 py-2">{{ row.name }}</td>
-                                <td class="border px-4 py-2">{{ row.description }}</td>
+                                <th class="border px-4 py-2">{{ row.description }}</th>
                                 <th class="border px-4 py-2">{{ row.image }}</th>
                                 <th class="border px-4 py-2">{{ row.price }}</th>
                                 <th class="border px-4 py-2">{{ row.tags }}</th>
@@ -64,64 +64,58 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                             <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
                             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                                 role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <form>
+                                <form enctype="multipart/form-data">
                                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                         <div class="">
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput1"
+                                                <label for="name"
                                                     class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
                                                 <input type="text"
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput1" placeholder="Enter Name"
-                                                    v-model="form.name">
+                                                    id="name" placeholder="Enter Name" v-model="form.name">
                                                 <div v-if="$page.props.errors.name" class="text-red-500">{{
-                                                $page.errors.name[0]
+                                                    $page.errors.name[0]
                                                 }}</div>
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput2"
+                                                <label for="description"
                                                     class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
                                                 <textarea
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput2" v-model="form.description"
+                                                    id="description" v-model="form.description"
                                                     placeholder="Enter description"></textarea>
                                                 <div v-if="$page.props.errors.description" class="text-red-500">{{
-                                                $page.errors.description[0]
+                                                    $page.errors.description[0]
                                                 }}</div>
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput3"
+                                                <label for="price"
                                                     class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
                                                 <input type="text"
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput3" placeholder="Enter value"
-                                                    v-model="form.price">
+                                                    id="price" placeholder="Enter value" v-model="form.price">
                                                 <div v-if="$page.props.errors.price" class="text-red-500">{{
-                                                $page.errors.price[0]
+                                                    $page.errors.price[0]
                                                 }}</div>
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput4"
+                                                <label for="tags"
                                                     class="block text-gray-700 text-sm font-bold mb-2">Tags:</label>
                                                 <textarea
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput4" v-model="form.tags"
-                                                    placeholder="Enter Tags"></textarea>
+                                                    id="tags" v-model="form.tags" placeholder="Enter Tags"></textarea>
                                                 <div v-if="$page.props.errors.tags" class="text-red-500">{{
-                                                $page.errors.tags[0]
+                                                    $page.errors.tags[0]
                                                 }}</div>
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput5"
+                                                <label for="image"
                                                     class="block text-gray-700 text-sm font-bold mb-2">image:</label>
-                                                <form @submit="formSubmit" enctype="multipart/form-data">
-                                                    <input type="file"
-                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        id="exampleFormControlInput5" placeholder="Select image file"
-                                                        v-on="onChange">
-                                                </form>
+                                                <input type="file" ref="fileInput"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="image" placeholder="Select image file" v-on="onChange">
                                                 <div v-if="$page.props.errors.image" class="text-red-500">{{
-                                                $page.errors.image[0]
+                                                    $page.errors.image[0]
                                                 }}</div>
                                             </div>
                                         </div>
