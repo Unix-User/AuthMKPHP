@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 </script>
     
 <template>
@@ -21,9 +22,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                             </div>
                         </div>
                     </div>
-                    <button @click="openModal()"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Invite
-                        New</button>
+                    <PrimaryButton @click="openModal()">Invite New</PrimaryButton>
                     <table class="table-fixed w-full">
                         <thead>
                             <tr class="bg-gray-100">
@@ -35,7 +34,6 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                         </thead>
                         <tbody>
                             <tr v-for="row in data">
-                                
                                 <th class="border px-4 py-2">
                                     <button v-if="row.profile_photo_path"
                                         class="flex border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
