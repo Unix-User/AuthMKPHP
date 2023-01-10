@@ -19,7 +19,7 @@ class ProductsController extends Controller
     public function index()
     {
         return Inertia::render('Products', [
-            'data' => Product::all()
+            'data' => Product::all()->where('user_id',  '=', auth()->user()->current_team_id)
         ]);
     }
 
@@ -42,11 +42,11 @@ class ProductsController extends Controller
 
         $product = new Product();
         
-        $product['user_id'] = auth()->user()->id;
+        $product['user_id'] = auth()->user()->current_team_id;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
+            $destinationPath = public_path('/storage/images');
             if (!is_dir($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }

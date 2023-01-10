@@ -12,7 +12,7 @@ class UsersController extends Controller
     public function index()
     {
         return Inertia::render('Users', [
-            'data' => User::all()
+            'data' => User::all()->where('current_team_id',  '=', auth()->user()->current_team_id)
         ]);
     }
 }

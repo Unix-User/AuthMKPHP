@@ -1,7 +1,12 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
 </script>
-    
+
 <template>
     <AppLayout title="Devices">
         <template #header>
@@ -21,9 +26,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                             </div>
                         </div>
                     </div>
-                    <button @click="openModal()"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New
-                        Device</button>
+                    <PrimaryButton @click="openModal()">Create New Device</PrimaryButton>
                     <table class="table-fixed w-full">
                         <thead>
                             <tr class="bg-gray-100">
@@ -33,25 +36,20 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                                 <th class="px-4 py-2">user_id</th>
                                 <th class="px-4 py-2">ikev2</th>
                                 <th class="px-4 py-2">user</th>
-                                <th class="px-4 py-2">password</th>
                                 <th class="px-4 py-2">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="row in data">
-                                <td class="border px-4 py-2">{{ row.id }}</td>
-                                <td class="border px-4 py-2">{{ row.name }}</td>
+                                <th class="border px-4 py-2">{{ row.id }}</th>
+                                <th class="border px-4 py-2">{{ row.name }}</th>
                                 <th class="border px-4 py-2">{{ row.ip }}</th>
                                 <th class="border px-4 py-2">{{ row.user_id }}</th>
                                 <th class="border px-4 py-2">{{ row.ikev2 }}</th>
                                 <th class="border px-4 py-2">{{ row.user }}</th>
-                                <th class="border px-4 py-2">{{ row.password }}</th>
-
                                 <td class="border px-4 py-2">
-                                    <button @click="edit(row)"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                    <button @click="deleteRow(row)"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                    <PrimaryButton @click="edit(row)">Edit</PrimaryButton>
+                                    <SecondaryButton @click="deleteRow(row)">Delete</SecondaryButton>
                                 </td>
                             </tr>
                         </tbody>
@@ -71,70 +69,40 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                         <div class="">
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput1"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-                                                <input type="text"
-                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput1" placeholder="Enter Name"
-                                                    v-model="form.name">
-                                                <div v-if="$page.props.errors.name" class="text-red-500">{{
-                                                $page.errors.name[0]
-                                                }}</div>
+                                                <InputLabel for="name" value="Name" />
+                                                <TextInput id="name" v-model="form.name" type="text"
+                                                    class="mt-1 block w-full" autocomplete="name" />
+                                                <InputError :message="$page.props.errors.name" class="mt-2" />
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput3"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">ip:</label>
-                                                <input type="text"
-                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput3" placeholder="Enter ip address"
-                                                    v-model="form.ip">
-                                                <div v-if="$page.props.errors.ip" class="text-red-500">{{
-                                                $page.errors.ip[0]
-                                                }}</div>
+                                                <InputLabel for="ip" value="ip" />
+                                                <TextInput id="ip" v-model="form.ip" type="text"
+                                                    class="mt-1 block w-full" autocomplete="ip" />
+                                                <InputError :message="$page.props.errors.ip" class="mt-2" />
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput4"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">user_id:</label>
-                                                <input type="text"
-                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput4" readonly
-                                                    v-model="$page.props.user.id">
-                                                <div v-if="$page.props.errors.user_id" class="text-red-500">{{
-                                                $page.errors.user_id[0]
-                                                }}</div>
+                                                <InputLabel for="user_id" value="user_id" />
+                                                <TextInput id="user_id" v-model="form.user_id" type="text"
+                                                    class="mt-1 block w-full" autocomplete="user_id" />
+                                                <InputError :message="$page.props.errors.ip" class="mt-2" />
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput5"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">ikev2:</label>
-                                                <input type="checkbox"
-                                                    class="shadow appearance-none border rounded py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput5"
-                                                    v-model="form.ikev2">
-                                                <div v-if="$page.props.errors.ikev2" class="text-red-500">{{
-                                                $page.errors.ikev2[0]
-                                                }}</div>
+                                                <InputLabel for="ikev2" value="ikev2" />
+                                                <TextInput id="ikev2" v-model="form.ikev2" type="checkbox"
+                                                    class="mt-1 block w-full" autocomplete="ikev2" />
+                                                <InputError :message="$page.props.errors.ikev2" class="mt-2" />
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput6"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">user:</label>
-                                                <input type="text"
-                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput6" placeholder="Enter user"
-                                                    v-model="form.user">
-                                                <div v-if="$page.props.errors.user" class="text-red-500">{{
-                                                $page.errors.user[0]
-                                                }}</div>
+                                                <InputLabel for="user" value="user" />
+                                                <TextInput id="user" v-model="form.user" type="text"
+                                                    class="mt-1 block w-full" autocomplete="user" />
+                                                <InputError :message="$page.props.errors.user" class="mt-2" />
                                             </div>
                                             <div class="mb-4">
-                                                <label for="exampleFormControlInput7"
-                                                    class="block text-gray-700 text-sm font-bold mb-2">password:</label>
-                                                <input type="text"
-                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="exampleFormControlInput7" placeholder="Enter password"
-                                                    v-model="form.password">
-                                                <div v-if="$page.props.errors.password" class="text-red-500">{{
-                                                $page.errors.password[0]
-                                                }}</div>
+                                                <InputLabel for="password" value="password" />
+                                                <TextInput id="password" v-model="form.user" type="password"
+                                                    class="mt-1 block w-full" autocomplete="password" />
+                                                <InputError :message="$page.props.errors.password" class="mt-2" />
                                             </div>
                                         </div>
                                     </div>
