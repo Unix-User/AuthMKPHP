@@ -15,4 +15,5 @@ class UsersController extends Controller
             'data' => User::all()->where('current_team_id',  '=', auth()->user()->current_team_id)
         ]);
     }
+    
 }

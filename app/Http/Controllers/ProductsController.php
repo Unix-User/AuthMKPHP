@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductsController extends Controller
     public function index()
     {
         return Inertia::render('Products', [
-            'data' => Product::all()->where('user_id',  '=', auth()->user()->current_team_id)
+            'data' => Product::all()->where('team_id',  '=', auth()->user()->current_team_id)
         ]);
     }
 
@@ -30,40 +31,30 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         Validator::make($request->all(), [
             'name' => ['required'],
             'description' => ['required'],
             'tags' => ['required'],
             'price' => ['required|numeric'],
-            'user_id' => ['max:255'],
             'image' => ['required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'],
         ]);
-
-        $product = new Product();
-        
-        $product['user_id'] = auth()->user()->current_team_id;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/storage/images');
-            if (!is_dir($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
-            $image->move($destinationPath, $name);
-            $product->image = $name;
-        }
-        
-        $product['name'] = $request->input('name');
-        $product['description'] = $request->input('description');
-        $product['tags'] = $request->input('tags');
-        $product['price'] = $request->input('price');
-
-        $product->save();
+        $image = $request->file('image');
+        $fileName = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = Storage::disk('images')->putFileAs('products', $image, $fileName);
+        $product = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'team_id' => auth()->user()->current_team_id,
+            'tags' => $request->tags,
+            'image' => $imagePath
+        ];
+        Product::create($product);
 
         return redirect()->back()
-            ->with('message', 'Product Created Successfully.');
+            ->with('message', 'Product Created Successfully for team ');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -72,9 +63,14 @@ class ProductsController extends Controller
      */
     public function update(Request $request)
     {
+        dd($request);
         Validator::make($request->all(), [
+            'id' => ['required', 'exists:products,id,team_id,' . auth()->user()->current_team_id],
             'name' => ['required'],
             'description' => ['required'],
+            'tags' => ['required'],
+            'price' => ['required|numeric'],
+            'image' => ['required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'],
         ])->validate();
 
         if ($request->has('id')) {
@@ -83,6 +79,7 @@ class ProductsController extends Controller
                 ->with('message', 'Product Updated Successfully.');
         }
     }
+
 
     /**
      * Show the form for creating a new resource.

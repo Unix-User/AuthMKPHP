@@ -29,7 +29,6 @@ defineProps({
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-
                 <svg viewBox="0 0 651 192" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
                     <defs>
@@ -236,97 +235,90 @@ defineProps({
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                            <svg stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-8 h-8 text-gray-500" viewBox="0 0 576 512">
                                 <path
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    d="M184.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L39 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L39 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM256 96c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32zM192 416c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H224c-17.7 0-32-14.3-32-32zM80 464c-26.5 0-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
                                 <a href="https://laravel.com/docs"
-                                    class="underline text-white dark:text-gray-900">Documentation</a>
+                                    class="underline text-white dark:text-gray-900">Gestão</a>
                             </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-400 dark:text-gray-600 text-sm">
-                                Laravel has wonderful, thorough documentation covering every aspect of the framework.
-                                Whether you are new to the framework or have previous experience with Laravel, we
-                                recommend reading all of the documentation from beginning to end.
+                                AuthMKPHP tem uma maravilhosa e completa lista de ferramentas para gerenciar
+                                todos os aspectos de sua estrutura de rede pra você que é novo ou já tem experiência
+                                anterior com Mikrotik.
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6 border-t border-gray-700 dark:border-gray-200 md:border-t-0 md:border-l">
                         <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                            <svg stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-8 h-8 text-gray-500" viewBox="0 0 640 512">
                                 <path
-                                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
                                 <a href="https://laracasts.com"
-                                    class="underline text-white dark:text-gray-900">Laracasts</a>
+                                    class="underline text-white dark:text-gray-900">Desenvolvimento</a>
                             </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-400 dark:text-gray-600 text-sm">
-                                Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript
-                                development. Check them out, see for yourself, and massively level up your development
-                                skills in the process.
+                                AuthMKPHP foi desenvolvido usando Laravel, PHP, e JavaScript, possibilitando
+                                a implementação na maioria dos serviços de hospedagem disponiveis na web
+                                facilitando o processo de configuração da aplicação.
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6 border-t border-gray-700 dark:border-gray-200">
                         <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                            <svg stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-8 h-8 text-gray-500" viewBox="0 0 640 512">
                                 <path
-                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                    d="M320 0c17.7 0 32 14.3 32 32V96H480c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256c0-22.1-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40s40-17.9 40-40zm152 40c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
                                 <a href="https://laravel-news.com/"
-                                    class="underline text-white dark:text-gray-900">Laravel News</a>
+                                    class="underline text-white dark:text-gray-900">Automatização</a>
                             </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-400 dark:text-gray-600 text-sm">
-                                Laravel News is a community driven portal and newsletter aggregating all of the latest
-                                and most important news in the Laravel ecosystem, including new package releases and
-                                tutorials.
+                                Automatize tarefas repetitivas, agende execução de sincronizações
+                                em multiplos dispositivos. O AuthMKPHP possui ferramentas para
+                                automatizar, contabilizar e sincronizar as informações em seu
+                                Mikrotik de forma padronizada.
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6 border-t border-gray-700 dark:border-gray-200 md:border-l">
                         <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                            <svg stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-8 h-8 text-gray-500" viewBox="0 0 640 512">
                                 <path
-                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    d="M535 41c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l64 64c4.5 4.5 7 10.6 7 17s-2.5 12.5-7 17l-64 64c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l23-23L384 112c-13.3 0-24-10.7-24-24s10.7-24 24-24l174.1 0L535 41zM105 377l-23 23L256 400c13.3 0 24 10.7 24 24s-10.7 24-24 24L81.9 448l23 23c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L7 441c-4.5-4.5-7-10.6-7-17s2.5-12.5 7-17l64-64c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zM96 64H337.9c-3.7 7.2-5.9 15.3-5.9 24c0 28.7 23.3 52 52 52l117.4 0c-4 17 .6 35.5 13.8 48.8c20.3 20.3 53.2 20.3 73.5 0L608 169.5V384c0 35.3-28.7 64-64 64H302.1c3.7-7.2 5.9-15.3 5.9-24c0-28.7-23.3-52-52-52l-117.4 0c4-17-.6-35.5-13.8-48.8c-20.3-20.3-53.2-20.3-73.5 0L32 342.5V128c0-35.3 28.7-64 64-64zm64 64H96v64c35.3 0 64-28.7 64-64zM544 320c-35.3 0-64 28.7-64 64h64V320zM320 352c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96s43 96 96 96z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold text-white dark:text-gray-900">
-                                Vibrant Ecosystem
+                                Integração de Pagamentos
                             </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-400 dark:text-gray-600 text-sm">
-                                Laravel's robust library of first-party tools and libraries, such as <a
-                                    href="https://forge.laravel.com" class="underline">Forge</a>, <a
-                                    href="https://vapor.laravel.com" class="underline">Vapor</a>, <a
-                                    href="https://nova.laravel.com" class="underline">Nova</a>, and <a
-                                    href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects
-                                to the next level. Pair them with powerful open source libraries like <a
-                                    href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a
-                                    href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a
-                                    href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a
-                                    href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a
-                                    href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a
-                                    href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
+                                AuthMKPHP já esta integrado a plataformas de pagamento como <a
+                                    href="https://forge.laravel.com" class="underline">Mercado Pago</a> e <a
+                                    href="https://vapor.laravel.com" class="underline">PagSeguro</a>
+                                possibilitando o processamento de pagamentos recebidos e liberando a conexão de seus
+                                clientes automáticamente
                             </div>
                         </div>
                     </div>
