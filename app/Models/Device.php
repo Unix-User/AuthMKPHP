@@ -12,7 +12,7 @@ class Device extends Model
     protected $fillable = [
         'name',
         'ip',
-        'user_id',
+        'team_id',
         'ikev2',
         'user',
         'password',

@@ -33,7 +33,7 @@ import TextInput from '@/Components/TextInput.vue';
                                 <th class="px-4 py-2 w-20">No.</th>
                                 <th class="px-4 py-2">name</th>
                                 <th class="px-4 py-2">ip</th>
-                                <th class="px-4 py-2">user_id</th>
+                                <th class="px-4 py-2">team_id</th>
                                 <th class="px-4 py-2">ikev2</th>
                                 <th class="px-4 py-2">user</th>
                                 <th class="px-4 py-2">Action</th>
@@ -44,7 +44,7 @@ import TextInput from '@/Components/TextInput.vue';
                                 <th class="border px-4 py-2">{{ row.id }}</th>
                                 <th class="border px-4 py-2">{{ row.name }}</th>
                                 <th class="border px-4 py-2">{{ row.ip }}</th>
-                                <th class="border px-4 py-2">{{ row.user_id }}</th>
+                                <th class="border px-4 py-2">{{ row.team_id }}</th>
                                 <th class="border px-4 py-2">{{ row.ikev2 }}</th>
                                 <th class="border px-4 py-2">{{ row.user }}</th>
                                 <td class="border px-4 py-2">
@@ -81,10 +81,9 @@ import TextInput from '@/Components/TextInput.vue';
                                                 <InputError :message="$page.props.errors.ip" class="mt-2" />
                                             </div>
                                             <div class="mb-4">
-                                                <InputLabel for="user_id" value="user_id" />
-                                                <TextInput id="user_id" v-model="form.user_id" type="text"
-                                                    class="mt-1 block w-full" autocomplete="user_id" />
-                                                <InputError :message="$page.props.errors.ip" class="mt-2" />
+                                                <InputLabel for="team_id" value="team_id" />
+                                                <TextInput id="team_id" v-model="$page.props.user.current_team.name" type="text"
+                                                    class="mt-1 block w-full" readonly />
                                             </div>
                                             <div class="mb-4">
                                                 <InputLabel for="ikev2" value="ikev2" />
@@ -100,7 +99,7 @@ import TextInput from '@/Components/TextInput.vue';
                                             </div>
                                             <div class="mb-4">
                                                 <InputLabel for="password" value="password" />
-                                                <TextInput id="password" v-model="form.user" type="password"
+                                                <TextInput id="password" v-model="form.password" type="password"
                                                     class="mt-1 block w-full" autocomplete="password" />
                                                 <InputError :message="$page.props.errors.password" class="mt-2" />
                                             </div>
@@ -148,7 +147,7 @@ export default {
             form: {
                 name: null,
                 ip: null,
-                user_id: null,
+                team_id: null,
                 ikev2: null,
                 user: null,
                 password: null,

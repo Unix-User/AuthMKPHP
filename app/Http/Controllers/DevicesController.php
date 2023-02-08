@@ -18,7 +18,7 @@ class DevicesController extends Controller
     public function index()
     {
         return Inertia::render('Devices', [
-            'data' => Device::all()->where('user_id',  '=', auth()->user()->current_team_id)
+            'data' => Device::all()->where('team_id',  '=', auth()->user()->current_team_id)
         ]);
     }
 
@@ -34,7 +34,8 @@ class DevicesController extends Controller
             'ip' => ['required'],
         ])->validate();
         $device = $request->all();
-        $device['user_id'] = auth()->user()->current_team_id;
+        $device['team_id'] = auth()->user()->current_team_id;
+
         Device::create($device);
 
         return redirect()->back()

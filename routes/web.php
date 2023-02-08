@@ -6,6 +6,7 @@ use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UsersController;
 use Inertia\Inertia;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -35,6 +37,11 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    Route::get('/showcase', function () {
+        return Inertia::render('Showcase', [
+            'data' => Product::all()->where('team_id',  '=', auth()->user()->current_team_id)
+        ]);
+    })->name('showcase');
     Route::resource('products', ProductsController::class);
     Route::resource('devices', DevicesController::class);
     Route::resource('users', UsersController::class);

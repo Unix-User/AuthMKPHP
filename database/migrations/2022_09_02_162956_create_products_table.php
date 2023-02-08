@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('price')->nullable();
-            $table->foreignId('user_id')
+            $table->foreignId('team_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

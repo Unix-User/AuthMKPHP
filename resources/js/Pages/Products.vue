@@ -2,11 +2,12 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 </script>
-    
+
 <template>
     <AppLayout title="Products">
         <template #header>
@@ -56,93 +57,82 @@ import TextInput from '@/Components/TextInput.vue';
                             </tr>
                         </tbody>
                     </table>
-                    <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
-                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                            <div class="fixed inset-0 transition-opacity">
-                                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                            </div>
-                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
-                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <form enctype="multipart/form-data">
-                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                        <div class="">
-                                            <div class="mb-4">
-                                                <InputLabel for="name" value="Name" />
-                                                <TextInput id="name" v-model="form.name" type="text"
-                                                    class="mt-1 block w-full" autocomplete="name" />
-                                                <InputError :message="$page.props.errors.name" class="mt-2" />
-                                            </div>
-                                            <div class="mb-4">
-                                                <InputLabel for="description" value="Description" />
-                                                <TextInput id="description" v-model="form.description" type="text"
-                                                    class="mt-1 block w-full" autocomplete="description" />
-                                                <InputError :message="$page.props.errors.description" class="mt-2" />
-                                            </div>
-                                            <div class="mb-4">
-                                                <InputLabel for="price" value="Price" />
-                                                <TextInput id="price" v-model="form.price" type="number"
-                                                    class="mt-1 block w-full" autocomplete="price" />
-                                                <InputError :message="$page.props.errors.price" class="mt-2" />
-                                            </div>
-                                            <div class="mb-4">
-                                                <InputLabel for="tags" value="Tags" />
-                                                <TextInput id="tags" v-model="form.tags" type="text"
-                                                    class="mt-1 block w-full" autocomplete="tags" />
-                                                <InputError :message="$page.props.errors.tags" class="mt-2" />
-                                            </div>
-                                            <div class="mb-4">
-                                                <div v-if="!form.image" class="col-span-6 sm:col-span-4">
-                                                    <input ref="imageInput" type="file" class="hidden"
-                                                        @change="updateImagePreview">
-                                                    <InputLabel for="image" value="Image" />
-                                                    <div v-show="!imagePreview" class="mt-2">
-                                                        <img :src="form.image" :alt="form.image"
-                                                            class="rounded-full h-20 w-20 object-cover">
-                                                    </div>
-                                                    <div v-show="imagePreview" class="mt-2">
-                                                        <span
-                                                            class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                                                            :style="'background-image: url(\'' + imagePreview + '\');'" />
-                                                    </div>
-                                                    <SecondaryButton class="mt-2 mr-2" type="button"
-                                                        @click.prevent="selectNewImage">
-                                                        Select A New Image
-                                                    </SecondaryButton>
-                                                    <SecondaryButton v-if="form.image" type="button" class="mt-2"
-                                                        @click.prevent="deleteImage">
-                                                        Remove Image
-                                                    </SecondaryButton>
-                                                    <InputError :message="$page.props.errors.image" class="mt-2" />
-                                                </div>
+                    <Modal :show="isOpen" @close="closeModal">
+                        <form enctype="multipart/form-data">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="">
+                                    <div class="mb-4">
+                                        <InputLabel for="name" value="Name" />
+                                        <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full"
+                                            autocomplete="name" />
+                                        <InputError :message="$page.props.errors.name" class="mt-2" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <InputLabel for="description" value="Description" />
+                                        <TextInput id="description" v-model="form.description" type="text"
+                                            class="mt-1 block w-full" autocomplete="description" />
+                                        <InputError :message="$page.props.errors.description" class="mt-2" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <InputLabel for="price" value="Price" />
+                                        <TextInput id="price" v-model="form.price" type="number"
+                                            class="mt-1 block w-full" autocomplete="price" />
+                                        <InputError :message="$page.props.errors.price" class="mt-2" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <InputLabel for="tags" value="Tags" />
+                                        <TextInput id="tags" v-model="form.tags" type="text" class="mt-1 block w-full"
+                                            autocomplete="tags" />
+                                        <InputError :message="$page.props.errors.tags" class="mt-2" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <InputLabel for="image" value="Image" />
+                                        <div v-if="!form.image" class="col-span-6 sm:col-span-4">
+                                            <input ref="imageInput" type="file" class="hidden"
+                                                @change="updateImagePreview">
+                                            <div v-if="imagePreview" class="mt-2">
+                                                <img :src="imagePreview" class="rounded-full h-20 w-20 object-cover">
                                             </div>
                                         </div>
+                                        <div v-if="imagePreview" class="mt-2">
+                                            <img :src="imagePreview" class="rounded-full h-20 w-20 object-cover">
+                                        </div>
+                                        <div v-else class="mt-2">
+                                            <span class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                                :style="'background-image: url(\'storage/images/' + form.image + '\');'" />
+                                        </div>
+                                        <SecondaryButton class="mt-2 mr-2" type="button"
+                                            @click.prevent="selectNewImage">Select A New Image</SecondaryButton>
+                                        <SecondaryButton type="button" class="mt-2" @click.prevent="deleteImage">
+                                            Remove Image</SecondaryButton>
+                                        <InputError :message="$page.props.errors.image" class="mt-2" />
                                     </div>
-                                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                        <PrimaryButton wire:click.prevent="store()" type="button"
-                                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                                            v-show="!editMode" @click="save(form)">
-                                            Save
-                                        </PrimaryButton>
-                                        <PrimaryButton wire:click.prevent="store()" type="button"
-                                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                                            v-show="editMode" @click="update(form)">
-                                            Update
-                                        </PrimaryButton>
-                                        <SecondaryButton @click="closeModal()" type="button"
-                                            class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                                            Cancel
-                                        </SecondaryButton>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <PrimaryButton wire:click.prevent="store()" type="button"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                    v-show="!editMode" @click="save(form)">
+                                    Save
+                                </PrimaryButton>
+                                <PrimaryButton wire:click.prevent="store()" type="button"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                    v-show="editMode" @click="update(form)">
+                                    Update
+                                </PrimaryButton>
+                                <SecondaryButton @click="closeModal()" type="button"
+                                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                    Cancel
+                                </SecondaryButton>
+                            </div>
+                        </form>
+                    </Modal>
                 </div>
             </div>
         </div>
     </AppLayout>
 </template>
+
 <script>
 export default {
     props: ['data', 'errors'],
@@ -151,57 +141,122 @@ export default {
             editMode: false,
             isOpen: false,
             form: {
-                price: null,
-                description: null,
+                name: '',
+                price: 0,
+                description: '',
+                team_id: '',
                 image: null,
-                price: null,
-                tags: null,
+                tags: '',
+                files: []
             },
         }
     },
     methods: {
-        openModal: function () {
+        openModal() {
             this.isOpen = true;
         },
-        closeModal: function () {
+        closeModal() {
             this.isOpen = false;
             this.reset();
+            this.deleteImage();
             this.editMode = false;
         },
-        reset: function () {
+        reset() {
             this.form = {
                 title: null,
                 body: null,
             }
         },
-        save: function (data) {
-            this.$inertia.post('/products', data, {
-                forceFormData: true,
+        edit(data) {
+            this.form = { ...data };
+            this.editMode = true;
+            this.openModal();
+        },
+        dataURItoBlob(dataURI) {
+            var byteString = atob(dataURI.split(',')[1]);
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: 'image/jpeg' });
+        },
+        save(data) {
+            const formData = new FormData();
+            formData.append('name', data.name);
+            formData.append('description', data.description);
+            formData.append('price', data.price);
+            formData.append('tags', data.tags);
+            const imageBlob = this.dataURItoBlob(this.imagePreview);
+            formData.append('image', imageBlob, 'image.jpg');
+            this.$inertia.post('/products', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+                onProgress: progressEvent => {
+                    console.log(`Upload progress: ${Math.round(progressEvent.loaded / progressEvent.total * 100)}%`);
+                },
             })
             this.reset();
             this.closeModal();
             this.editMode = false;
         },
-        edit: function (data) {
-            this.form = Object.assign({}, data);
-            this.editMode = true;
-            this.openModal();
-        },
-        update: function (data) {
-            data._method = 'PUT';
-            this.$inertia.post('/products/' + data.id, data, {
-                forceFormData: true,
+        update(data) {
+            const formData = new FormData();
+            formData.append('_method', 'PUT');
+            formData.append('id', data.id);
+            formData.append('name', data.name);
+            formData.append('description', data.description);
+            formData.append('price', data.price);
+            formData.append('tags', data.tags);
+            const imageBlob = this.dataURItoBlob(this.imagePreview);
+            formData.append('image', imageBlob, 'image.jpg');
+            this.$inertia.post('/products/' + data.id, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+                onProgress: progressEvent => {
+                    console.log(`Upload progress: ${Math.round(progressEvent.loaded / progressEvent.total * 100)}%`);
+                },
             })
             this.reset();
             this.closeModal();
         },
-        deleteRow: function (data) {
+        deleteRow(data) {
             if (!confirm('Are you sure want to remove?')) return;
             data._method = 'DELETE';
-            this.$inertia.post('/products/' + data.id, data)
+            this.$inertia.post(`/products/${data.id}`, data)
             this.reset();
             this.closeModal();
+        },
+        updateImagePreview() {
+            try {
+                const reader = new FileReader();
+                reader.addEventListener('load', () => {
+                    this.imagePreview = reader.result;
+                    this.form.image = reader.result;
+                });
+                reader.readAsDataURL(this.$refs.imageInput.files[0]);
+            } catch (error) {
+                console.error(`An error has occurred while reading the image file: ${error}`);
+            }
+        },
+        selectNewImage() {
+            this.imagePreview = null;
+            try {
+                if (this.$refs.imageInput && typeof this.$refs.imageInput.click === 'function') {
+                    this.$refs.imageInput.click();
+                } else {
+                    console.error(`The image input element is not available`);
+                }
+            } catch (error) {
+                console.error(`An error has occurred while selecting the image: ${error}`);
+            }
+        },
+        deleteImage() {
+            this.form.image = null;
+            this.imagePreview = null
+            if (this.$refs.imageInput) {
+                this.$refs.imageInput.value = null;
+            }
         }
+
     }
 }
 </script>
