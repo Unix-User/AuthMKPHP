@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('price')->nullable();
-            $table->string('team_id');
+            $table->foreignId('team_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('tags')->nullable();
             $table->timestamps();
         });

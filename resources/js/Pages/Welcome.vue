@@ -241,8 +241,7 @@ defineProps({
                                     d="M184.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L39 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L39 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM256 96c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32zM192 416c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H224c-17.7 0-32-14.3-32-32zM80 464c-26.5 0-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="https://laravel.com/docs"
-                                    class="underline text-white dark:text-gray-900">Gestão</a>
+                                <a href="#" class="underline text-white dark:text-gray-900">Gestão</a>
                             </div>
                         </div>
 
@@ -263,8 +262,7 @@ defineProps({
                                     d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="https://laracasts.com"
-                                    class="underline text-white dark:text-gray-900">Desenvolvimento</a>
+                                <a href="#" class="underline text-white dark:text-gray-900">Desenvolvimento</a>
                             </div>
                         </div>
 
@@ -285,8 +283,7 @@ defineProps({
                                     d="M320 0c17.7 0 32 14.3 32 32V96H480c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256c0-22.1-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40s40-17.9 40-40zm152 40c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z" />
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="https://laravel-news.com/"
-                                    class="underline text-white dark:text-gray-900">Automatização</a>
+                                <a href="#" class="underline text-white dark:text-gray-900">Automatização</a>
                             </div>
                         </div>
 
@@ -314,9 +311,8 @@ defineProps({
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-400 dark:text-gray-600 text-sm">
-                                AuthMKPHP já esta integrado a plataformas de pagamento como <a
-                                    href="https://forge.laravel.com" class="underline">Mercado Pago</a> e <a
-                                    href="https://vapor.laravel.com" class="underline">PagSeguro</a>
+                                AuthMKPHP já esta integrado a plataformas de pagamento como <a href="#"
+                                    class="underline">Mercado Pago</a> e <a href="#" class="underline">PagSeguro</a>
                                 possibilitando o processamento de pagamentos recebidos e liberando a conexão de seus
                                 clientes automáticamente
                             </div>
@@ -334,7 +330,7 @@ defineProps({
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
 
-                        <a href="https://laravel.bigcartel.com" class="ml-1 underline">
+                        <a href="#" class="ml-1 underline">
                             Shop
                         </a>
 
@@ -344,7 +340,7 @@ defineProps({
                                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
 
-                        <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
+                        <a href="#" class="ml-1 underline">
                             Sponsor
                         </a>
                     </div>

@@ -82,9 +82,8 @@ import TextInput from '@/Components/TextInput.vue';
                                             </div>
                                             <div class="mb-4">
                                                 <InputLabel for="team_id" value="team_id" />
-                                                <TextInput id="team_id" v-model="$page.props.user.current_team.id" type="text"
-                                                    class="mt-1 block w-full" autocomplete="team_id" />
-                                                <InputError :message="$page.props.errors.ip" class="mt-2" />
+                                                <TextInput id="team_id" v-model="$page.props.user.current_team.name" type="text"
+                                                    class="mt-1 block w-full" readonly />
                                             </div>
                                             <div class="mb-4">
                                                 <InputLabel for="ikev2" value="ikev2" />

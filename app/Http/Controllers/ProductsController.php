@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
@@ -63,7 +62,6 @@ class ProductsController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request);
         Validator::make($request->all(), [
             'id' => ['required', 'exists:products,id,team_id,' . auth()->user()->current_team_id],
             'name' => ['required'],
@@ -71,13 +69,24 @@ class ProductsController extends Controller
             'tags' => ['required'],
             'price' => ['required|numeric'],
             'image' => ['required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'],
-        ])->validate();
-
+        ]);
+        $image = $request->file('image');
+        $fileName = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = Storage::disk('images')->putFileAs('products', $image, $fileName);
+        $product = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'team_id' => auth()->user()->current_team_id,
+            'tags' => $request->tags,
+            'image' => $imagePath
+        ];
         if ($request->has('id')) {
-            Product::find($request->input('id'))->update($request->all());
+            Product::find($request->input('id'))->update($product);
             return redirect()->back()
                 ->with('message', 'Product Updated Successfully.');
         }
+        
     }
 
 

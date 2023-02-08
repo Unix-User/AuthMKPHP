@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('user_id')
+            $table->foreignId('team_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

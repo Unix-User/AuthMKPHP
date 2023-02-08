@@ -86,15 +86,17 @@ import TextInput from '@/Components/TextInput.vue';
                                         <InputError :message="$page.props.errors.tags" class="mt-2" />
                                     </div>
                                     <div class="mb-4">
+                                        <InputLabel for="image" value="Image" />
                                         <div v-if="!form.image" class="col-span-6 sm:col-span-4">
                                             <input ref="imageInput" type="file" class="hidden"
                                                 @change="updateImagePreview">
-                                            <InputLabel for="image" value="Image" />
                                             <div v-if="imagePreview" class="mt-2">
                                                 <img :src="imagePreview" class="rounded-full h-20 w-20 object-cover">
                                             </div>
                                         </div>
-
+                                        <div v-if="imagePreview" class="mt-2">
+                                            <img :src="imagePreview" class="rounded-full h-20 w-20 object-cover">
+                                        </div>
                                         <div v-else class="mt-2">
                                             <span class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
                                                 :style="'background-image: url(\'storage/images/' + form.image + '\');'" />
@@ -156,6 +158,7 @@ export default {
         closeModal() {
             this.isOpen = false;
             this.reset();
+            this.deleteImage();
             this.editMode = false;
         },
         reset() {
@@ -197,8 +200,16 @@ export default {
             this.editMode = false;
         },
         update(data) {
-            data._method = 'PUT';
-            this.$inertia.put('/products/' + data.id , data, {
+            const formData = new FormData();
+            formData.append('_method', 'PUT');
+            formData.append('id', data.id);
+            formData.append('name', data.name);
+            formData.append('description', data.description);
+            formData.append('price', data.price);
+            formData.append('tags', data.tags);
+            const imageBlob = this.dataURItoBlob(this.imagePreview);
+            formData.append('image', imageBlob, 'image.jpg');
+            this.$inertia.post('/products/' + data.id, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 onProgress: progressEvent => {
                     console.log(`Upload progress: ${Math.round(progressEvent.loaded / progressEvent.total * 100)}%`);
@@ -215,25 +226,35 @@ export default {
             this.closeModal();
         },
         updateImagePreview() {
-            const reader = new FileReader();
-            reader.addEventListener('load', () => {
-                this.imagePreview = reader.result;
-                this.form.image = reader.result;
-            });
-            reader.readAsDataURL(this.$refs.imageInput.files[0]);
+            try {
+                const reader = new FileReader();
+                reader.addEventListener('load', () => {
+                    this.imagePreview = reader.result;
+                    this.form.image = reader.result;
+                });
+                reader.readAsDataURL(this.$refs.imageInput.files[0]);
+            } catch (error) {
+                console.error(`An error has occurred while reading the image file: ${error}`);
+            }
         },
         selectNewImage() {
             this.imagePreview = null;
             try {
-                this.$refs.imageInput.click();
+                if (this.$refs.imageInput && typeof this.$refs.imageInput.click === 'function') {
+                    this.$refs.imageInput.click();
+                } else {
+                    console.error(`The image input element is not available`);
+                }
             } catch (error) {
-                console.log(`An error has occurred: ${error}`);
+                console.error(`An error has occurred while selecting the image: ${error}`);
             }
         },
         deleteImage() {
             this.form.image = null;
             this.imagePreview = null
-            this.imageInput.value = '';
+            if (this.$refs.imageInput) {
+                this.$refs.imageInput.value = null;
+            }
         }
 
     }
