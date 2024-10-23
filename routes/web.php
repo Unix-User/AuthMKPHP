@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UsersController;
+use App\Models\Device;
 use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,6 @@ Route::get('/', function () {
     ]);
 });
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -42,7 +43,27 @@ Route::middleware([
             'data' => Product::all()->where('team_id',  '=', auth()->user()->current_team_id)
         ]);
     })->name('showcase');
+
     Route::resource('products', ProductsController::class);
     Route::resource('devices', DevicesController::class);
     Route::resource('users', UsersController::class);
+
+    Route::get('/products', function () {
+        return Inertia::render('Products', [
+            'data' => Product::all()->where('team_id',  '=', auth()->user()->current_team_id)
+        ]);
+    })->name('products');
+
+    Route::get('/devices', function () {
+        return Inertia::render('Devices', [
+            'data' => Device::all()->where('team_id',  '=', auth()->user()->current_team_id)
+        ]);
+    })->name('devices');
+
+    Route::get('/users', function () {
+        return Inertia::render('Users', [
+            // 'data' => User::all()->where('team_id',  '=', auth()->user()->current_team_id)
+            'data' => User::all()->where('current_team_id',  '=', auth()->user()->current_team_id)
+        ]);
+    })->name('users');
 });

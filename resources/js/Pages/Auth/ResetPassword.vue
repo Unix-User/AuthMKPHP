@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
@@ -44,6 +44,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autofocus
+                    autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>

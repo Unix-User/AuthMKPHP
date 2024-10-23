@@ -17,10 +17,9 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Create a newly registered user.
      *
-     * @param  array  $input
-     * @return \App\Models\User
+     * @param  array<string, string>  $input
      */
-    public function create(array $input)
+    public function create(array $input): User
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
@@ -35,18 +34,28 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
-                $this->createTeam($user);
+                $this->addToTeam($user);
             });
         });
     }
 
     /**
-     * Create a personal team for the user.
-     *
-     * @param  \App\Models\User  $user
-     * @return void
+     * Add the user to the public team and set it as the current team.
      */
-    protected function createTeam(User $user)
+    protected function addToTeam(User $user): void
+    {
+        $publicTeam = Team::where('name', 'Public')->first();
+        
+        if ($publicTeam) {
+            $publicTeam->users()->attach($user, ['role' => 'member']);
+            $user->current_team_id = $publicTeam->id;
+            $user->save();
+        }
+    }
+    /**
+     * Create a personal team for the user.
+     */
+    protected function createTeam(User $user): void
     {
         $user->ownedTeams()->save(Team::forceCreate([
             'user_id' => $user->id,
