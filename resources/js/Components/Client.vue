@@ -1,14 +1,31 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { ref, watch } from 'vue';
 import ProductCard from './ProductCard.vue';
+
+const props = defineProps({
+    productsData: {
+        type: Array,
+        required: true
+    },
+});
+
+const latestProducts = ref([]);
+
+// Função para atualizar os produtos mais recentes
+const updateLatestProducts = () => {
+    latestProducts.value = Array.isArray(props.productsData) && props.productsData.length > 0
+        ? props.productsData.slice(-3).reverse()
+        : [];
+};
+
+// Atualiza os produtos mais recentes quando os dados mudam
+watch(() => props.productsData, updateLatestProducts, { immediate: true });
 </script>
 
 <template>
     <div>
         <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-            <ApplicationLogo class="block h-12 w-auto" />
-
-            <h1 class="mt-8 text-2xl font-medium text-gray-900 dark:text-white">
+            <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
                 Produtos
             </h1>
 
@@ -55,21 +72,10 @@ import ProductCard from './ProductCard.vue';
                     :productImage="row.image ? '/storage/images/' + row.image : '/storage/images/404.jpg'"
                     :productName="row.name"
                     :productDescription="row.description" 
-                    :productTags="row.tags.split(',')"
+                    :productTags="row.tags ? row.tags.split(',') : []"
                     class="bg-white dark:bg-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden text-gray-800 dark:text-gray-200"
                 />
             </div>
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    props: {
-        productsData: {
-            type: Array,
-            required: true
-        },
-    }
-}
-</script>

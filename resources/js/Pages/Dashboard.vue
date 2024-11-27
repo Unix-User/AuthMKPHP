@@ -2,7 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
 import Admin from "@/Components/Admin.vue";
-import Devices from "@/Components/Devices.vue";
+import Devices from "@/Components/DevicesTable.vue";
 </script>
 
 <template>
@@ -21,12 +21,6 @@ import Devices from "@/Components/Devices.vue";
           class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg"
         >
           <Admin />
-        </div>
-        <hr class="m-10"/>
-        <div
-          class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg"
-        >
-          <Devices />
         </div>
       </div>
     </div>

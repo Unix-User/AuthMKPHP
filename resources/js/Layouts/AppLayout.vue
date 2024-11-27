@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
@@ -25,6 +25,7 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
 </script>
 
 <template>
@@ -316,9 +317,32 @@ const logout = () => {
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main id="content" class="scrollable-element" style="overflow: auto; height: 100vh;">
                 <slot />
             </main>
         </div>
     </div>
 </template>
+
+<style>
+#content {
+    height: 100vh;
+    overflow: hidden; /* Remove scrollbar and hide it */
+}
+
+/* Para navegadores baseados em WebKit (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+    display: none; /* Oculta a barra de rolagem */
+}
+
+/* Para Firefox */
+.scrollable-element {
+    scrollbar-width: none; /* Oculta a barra de rolagem */
+}
+
+/* Para Internet Explorer e Edge */
+.scrollable-element {
+    -ms-overflow-style: none; /* Oculta a barra de rolagem */
+}
+</style>
+

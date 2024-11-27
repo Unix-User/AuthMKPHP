@@ -44,9 +44,9 @@ Route::middleware([
         ]);
     })->name('showcase');
 
-    Route::resource('products', ProductsController::class);
-    Route::resource('devices', DevicesController::class);
-    Route::resource('users', UsersController::class);
+    Route::resource('product', ProductsController::class);
+    Route::resource('device', DevicesController::class);
+    Route::resource('user', UsersController::class);
 
     Route::get('/products', function () {
         return Inertia::render('Products', [
