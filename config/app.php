@@ -196,6 +196,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        /*
+         * routeros service provider...
+         */
+        RouterOS\Laravel\ServiceProvider::class,
 
     ],
 
