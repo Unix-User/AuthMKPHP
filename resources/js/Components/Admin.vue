@@ -4,16 +4,17 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 <template>
     <div>
-        <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-            <ApplicationLogo class="block h-12 w-auto" />
+        <div class="p-8 lg:p-10 bg-white dark:bg-gray-800 rounded-lg shadow-md flex items-start space-x-6">
+            <ApplicationLogo class="block h-28 w-28" /> <!-- Adjusted logo size for better proportion -->
+            <div class="flex-1">
+                <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
+                    Bem-vindo ao Dashboard Administrativo!
+                </h1>
 
-            <h1 class="mt-8 text-2xl font-medium text-gray-900 dark:text-white">
-                Bem-vindo ao Dashboard Administrativo!
-            </h1>
-
-            <p class="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
-                AuthMKPHP fornece uma interface amigável para o gerenciamento de seus dispositivos Mikrotik. Nossa plataforma é projetada para ser simples, poderosa e agradável de usar. Acreditamos que você deve amar expressar sua criatividade através da programação, então passamos um tempo cuidadosamente elaborando o ecossistema AuthMKPHP para ser uma lufada de ar fresco. Esperamos que você goste.
-            </p>
+                <p class="mt-6 text-gray-600 dark:text-gray-400 leading-relaxed">
+                    AuthMKPHP oferece uma interface intuitiva para gerenciar seus dispositivos Mikrotik. Nossa plataforma é projetada para ser simples, poderosa e agradável de usar. Acreditamos que você deve amar expressar sua criatividade através da programação, e por isso, dedicamos tempo para criar um ecossistema AuthMKPHP que seja uma verdadeira lufada de ar fresco. Esperamos que você aproveite a experiência!
+                </p>
+            </div>
         </div>
 
         <div class="bg-gray-200 dark:bg-gray-800 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
