@@ -28,6 +28,7 @@ class ProductSeeder extends Seeder
                 'price' => 29.99,
                 'image' => 'products/basic_plan.jpg',
                 'tags' => 'internet,plano,basico',
+                'rate' => '10m/1m', // Added rate here
             ],
             [
                 'name' => 'Plano Intermediário',
@@ -35,6 +36,7 @@ class ProductSeeder extends Seeder
                 'price' => 49.99,
                 'image' => 'products/intermediate_plan.jpg',
                 'tags' => 'internet,plano,intermediario',
+                'rate' => '50m/5m', // Added rate here
             ],
             [
                 'name' => 'Plano Premium',
@@ -42,6 +44,7 @@ class ProductSeeder extends Seeder
                 'price' => 79.99,
                 'image' => 'products/premium_plan.jpg',
                 'tags' => 'internet,plano,premium',
+                'rate' => '100m/10m', // Added rate here
             ],
             [
                 'name' => 'Plano Família',
@@ -49,6 +52,7 @@ class ProductSeeder extends Seeder
                 'price' => 99.99,
                 'image' => 'products/family_plan.jpg',
                 'tags' => 'internet,plano,familia',
+                'rate' => '200m/20m', // Added rate here
             ],
             [
                 'name' => 'Plano Gamer',
@@ -56,6 +60,7 @@ class ProductSeeder extends Seeder
                 'price' => 129.99,
                 'image' => 'products/gamer_plan.jpg',
                 'tags' => 'internet,plano,gamer',
+                'rate' => '300m/30m', // Added rate here
             ],
         ];
 

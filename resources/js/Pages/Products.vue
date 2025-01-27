@@ -95,6 +95,12 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                                         <InputError :message="$page.props.errors.price" class="mt-2" />
                                     </div>
                                     <div class="mb-4">
+                                        <InputLabel for="rate" value="Rate" />
+                                        <TextInput id="rate" v-model="form.rate" type="number"
+                                            class="mt-1 block w-full" autocomplete="rate" />
+                                        <InputError :message="$page.props.errors.rate" class="mt-2" />
+                                    </div>
+                                    <div class="mb-4">
                                         <InputLabel for="tags" value="Tags" />
                                         <TextInput id="tags" v-model="form.tags" type="text" class="mt-1 block w-full"
                                             autocomplete="tags" />
@@ -158,6 +164,7 @@ export default {
             form: {
                 name: '',
                 price: 0,
+                rate: 0, // Added rate here
                 description: '',
                 team_id: '',
                 image: null,
@@ -180,6 +187,7 @@ export default {
             this.form = {
                 name: '',
                 price: 0,
+                rate: '',
                 description: '',
                 team_id: '',
                 image: null,
@@ -206,6 +214,7 @@ export default {
             formData.append('name', data.name);
             formData.append('description', data.description);
             formData.append('price', data.price);
+            formData.append('rate', data.rate);
             formData.append('tags', data.tags);
             const imageBlob = this.dataURItoBlob(this.imagePreview);
             formData.append('image', imageBlob, 'image.jpg');
@@ -225,6 +234,7 @@ export default {
             formData.append('name', data.name);
             formData.append('description', data.description);
             formData.append('price', data.price);
+            formData.append('rate', data.rate);
             formData.append('tags', data.tags);
             const imageBlob = this.dataURItoBlob(this.imagePreview);
             formData.append('image', imageBlob, 'image.jpg');

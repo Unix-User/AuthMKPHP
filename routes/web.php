@@ -2,8 +2,10 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RouterOSController;
 use App\Http\Controllers\UsersController;
 use App\Models\Device;
 use Inertia\Inertia;
@@ -40,7 +42,7 @@ Route::middleware([
     })->name('dashboard');
     Route::get('/showcase', function () {
         return Inertia::render('Showcase', [
-            'data' => Product::all()->where('team_id',  '=', auth()->user()->current_team_id)
+            'data' => Product::all()->where('team_id',  '=', Auth::user()->current_team_id)
         ]);
     })->name('showcase');
 
@@ -50,20 +52,20 @@ Route::middleware([
 
     Route::get('/products', function () {
         return Inertia::render('Products', [
-            'data' => Product::all()->where('team_id',  '=', auth()->user()->current_team_id)
+            'data' => Product::all()->where('team_id',  '=', Auth::user()->current_team_id)
         ]);
     })->name('products');
 
     Route::get('/devices', function () {
         return Inertia::render('Devices', [
-            'data' => Device::all()->where('team_id',  '=', auth()->user()->current_team_id)
+            'data' => Device::all()->where('team_id',  '=', Auth::user()->current_team_id)
         ]);
     })->name('devices');
 
     Route::get('/users', function () {
         return Inertia::render('Users', [
-            // 'data' => User::all()->where('team_id',  '=', auth()->user()->current_team_id)
-            'data' => User::all()->where('current_team_id',  '=', auth()->user()->current_team_id)
+            // 'data' => User::all()->where('team_id',  '=', Auth::user()->current_team_id)
+            'data' => User::all()->where('current_team_id',  '=', Auth::user()->current_team_id)
         ]);
     })->name('users');
 });
