@@ -1,7 +1,9 @@
 <p align="center"><a href="https://github.com/Unix-User/AuthMKPHP" target="_blank"><img src="https://user-images.githubusercontent.com/38821945/192930836-6be0ee28-7206-4651-a18c-da7e8ab99a11.svg" width="400" alt="Logotipo AuthMKPHP"></a></p>
 
 <p align="center">
+  
   [Português](README-PT.md) | [English](README.md)
+  
 </p>
 
 ## Acerca de AuthMKPHP
