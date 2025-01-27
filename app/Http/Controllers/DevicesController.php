@@ -3,218 +3,169 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\Product;
+use App\Models\User;
+use App\Services\RouterOSService;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use RouterOS\Client;
 use Illuminate\Support\Facades\Log;
-use RouterOS\Query\Query;
-use RouterOS\Config;
-
+use Illuminate\Support\Facades\Validator;
+use Normalizer;
+use Throwable;
 
 class DevicesController extends Controller
 {
-    /**
-     * Display a listing of the devices.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request): \Illuminate\Http\JsonResponse
+    private RouterOSService $routerOSService;
+
+    public function __construct(RouterOSService $routerOSService)
+    {
+        $this->routerOSService = $routerOSService;
+    }
+
+    public function index(): JsonResponse
     {
         $teamId = Auth::user()->current_team_id;
-        $perPage = $request->input('per_page', 4); // Default to 4 per page
-        $page = $request->input('page', 1); // Default to page 1
+        return response()->json(['data' => Device::where('team_id', $teamId)->get()]);
+    }
 
-        $devices = Device::where('team_id', $teamId)
-            ->paginate($perPage, ['*'], 'page', $page);
+    public function store(Request $request): JsonResponse
+    {
+        $validatedData = Validator::make($request->all(), [
+            'name' => ['required'],
+            'ip' => ['required', 'ip'],
+            'user' => ['required'],
+            'password' => ['required'],
+            'ikev2' => ['nullable'],
+            'team_id' => ['required', Rule::exists('teams', 'id')->where(fn($query) => $query->where('user_id', Auth::id()))],
+        ])->validate();
 
-        return response()->json([
-            'data' => $devices->items(),
-            'meta' => [
-                'current_page' => $devices->currentPage(),
-                'last_page' => $devices->lastPage(),
-                'per_page' => $devices->perPage(),
-                'total' => $devices->total(),
-            ],
-            'links' => [
-                'previous' => $devices->previousPageUrl(),
-                'next' => $devices->nextPageUrl(),
-            ],
-        ]);
+        $device = Device::create($validatedData);
+
+        return response()->json(['message' => 'Device Created Successfully.', 'data' => $device]);
+    }
+
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $device = Device::find($id);
+        if (!$device) {
+            return response()->json(['message' => 'Device not found.'], 404);
+        }
+
+        $validatedData = Validator::make($request->all(), [
+            'name' => ['required'],
+            'ip' => ['required', 'ip'],
+            'user' => ['required'],
+            'password' => ['required'],
+            'ikev2' => ['nullable'],
+            'team_id' => ['required', Rule::exists('teams', 'id')->where(fn($query) => $query->where('user_id', Auth::id()))],
+        ])->validate();
+
+        $device->update($validatedData);
+
+        return response()->json(['message' => 'Device Updated Successfully.', 'data' => $device]);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $device = Device::findOrFail($id);
+        $device->delete();
+        return response()->json(['message' => 'Device Deleted Successfully.']);
     }
 
     /**
-     * Show the selected device's information using the connection to RouterOS.
+     * Display the specified resource and sync device users and profiles.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show(Request $request, int $id): \Illuminate\Http\JsonResponse
+    public function show(int $id): JsonResponse
     {
-        $device = Device::where('team_id', Auth::user()->current_team_id)->find($id);
+        $device = $this->getDevice($id);
 
         if (!$device) {
             return response()->json(['error' => 'Device not found'], 404);
         }
 
         try {
-            $client = $this->connectToRouterOS($device);
+            $teamId = $device->team_id;
+            $users = User::where('current_team_id', $teamId)->get();
+            $products = Product::where('team_id', $teamId)->get();
 
-            $identityResponse = $client->query('/system/identity/print')->read();
-            $pppClientsResponse = $client->query('/ppp/active/print')->read();
-            $pppSecretResponse = $client->query('/ppp/secret/print')->read();
-            $connectionProfilesResponse = $client->query('/interface/ppp-client/print')->read();
+            $pppUsersOnDevice = collect($this->routerOSService->listPppUsers($device))->pluck('name')->toArray();
+            $pppProfilesOnDevice = collect($this->routerOSService->listPppProfiles($device))->pluck('name')->toArray();
+
+            foreach ($products as $product) {
+                $profileName = $this->sanitizeName($product->name);
+                if (!in_array($profileName, $pppProfilesOnDevice)) {
+                    $requestData = [
+                        'name' => $profileName,
+                        'rate-limit' => $product->rate
+                    ];
+                    $request = new Request($requestData);
+                    try {
+                        $this->routerOSService->createPppProfile($request, $device);
+                    } catch (Throwable $e) {
+                        Log::error('Error creating PPP profile', [
+                            'product_id' => $product->id,
+                            'profile_name' => $product->name,
+                            'device_id' => $device->id,
+                            'error' => $e->getMessage(),
+                            'rate_limit' => $requestData['rate-limit'],
+                        ]);
+                    }
+                }
+            }
+
+            foreach ($users as $user) {
+                $username = $this->sanitizeName($user->name);
+                if (!in_array($username, $pppUsersOnDevice)) {
+                    $requestData = [
+                        'name' => $username,
+                        'password' => Str::random(16),
+                        'profile' => 'default', // TODO: Ensure 'default' profile exists on RouterOS or make it configurable
+                    ];
+                    $request = new Request($requestData);
+                    try {
+                        $this->routerOSService->createPppUser($request, $device);
+                    } catch (Throwable $e) {
+                        Log::error('Error creating PPP user', [
+                            'user_id' => $user->id,
+                            'username' => $user->name,
+                            'device_id' => $device->id,
+                            'error' => $e->getMessage(),
+                        ]);
+                    }
+                }
+            }
+
+            $pppUsers = $this->routerOSService->listPppUsers($device);
+            $pppProfiles = $this->routerOSService->listPppProfiles($device);
+            $deviceInfo = $this->routerOSService->show($device);
 
             return response()->json([
-                'device' => $device,
-                'identity' => $identityResponse,
-                'ppp_clients' => $pppClientsResponse,
-                'ppp_secrets' => $pppSecretResponse,
-                'connection_profiles' => $connectionProfilesResponse,
+                'message' => 'Device users and profiles synced and data retrieved successfully.',
+                'pppUsers' => $pppUsers,
+                'device' => $deviceInfo,
+                'pppProfiles' => $pppProfiles,
             ]);
-        } catch (\Exception $e) {
-            Log::error('Error connecting to RouterOS: ' . $e->getMessage());
-            return response()->json(['device' => $device, 'error' => 'Error connecting to RouterOS'], 500);
+        } catch (Throwable $e) {
+            Log::error('Error fetching or syncing device resource', ['device_id' => $id, 'error' => $e->getMessage()]);
+            return response()->json(['error' => 'Error fetching or syncing device resource: ' . $e->getMessage()], 500);
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    private function getDevice(int $id): ?Device
     {
-        $validatedData = Validator::make($request->all(), [
-            'name' => ['required'],
-            'ip' => ['required', 'ip'],
-            'user' => ['required'],
-            'password' => ['required'],
-            'port' => ['nullable', 'integer'],
-        ])->validate();
-
-        $validatedData['team_id'] = Auth::user()->current_team_id;
-
-        Device::create($validatedData);
-
-        return redirect()->back()->with('message', 'Device Created Successfully.');
+        return Device::find($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
+    private function sanitizeName(string $name): string
     {
-        $validatedData = Validator::make($request->all(), [
-            'name' => ['required'],
-            'ip' => ['required', 'ip'],
-            'user' => ['required'],
-            'password' => ['required'],
-            'port' => ['nullable', 'integer'],
-        ])->validate();
-
-        Device::find($id)->update($validatedData);
-
-        return redirect()->back()->with('message', 'Device Updated Successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Request $request, int $id): \Illuminate\Http\RedirectResponse
-    {
-        Device::find($id)->delete();
-        return redirect()->back();
-    }
-
-    /**
-     * Creates a new PPP user on the Routerboard.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function createPppUser(Request $request, int $id): \Illuminate\Http\JsonResponse
-    {
-        $device = Device::where('team_id', Auth::user()->current_team_id)->find($id);
-
-        if (!$device) {
-            return response()->json(['error' => 'Device not found'], 404);
-        }
-
-        $validatedData = Validator::make($request->all(), [
-            'name' => ['required'],
-            'password' => ['required'],
-            'profile' => ['required'],
-        ])->validate();
-
-        try {
-            $client = $this->connectToRouterOS($device);
-            $client->command('/ppp/secret/add', [
-                'name' => $validatedData['name'],
-                'password' => $validatedData['password'],
-                'profile' => $validatedData['profile'],
-                'service' => 'any',
-            ]);
-
-            return response()->json(['message' => 'Usuário PPP criado com sucesso.']);
-        } catch (\Exception $e) {
-            Log::error('Error creating PPP user: ' . $e->getMessage());
-            return response()->json(['error' => 'Error creating PPP user'], 500);
-        }
-    }
-
-    /**
-     * Creates a new PPP user profile on the Routerboard.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function createPppProfile(Request $request, int $id): \Illuminate\Http\JsonResponse
-    {
-        $device = Device::where('team_id', Auth::user()->current_team_id)->find($id);
-
-        if (!$device) {
-            return response()->json(['error' => 'Device not found'], 404);
-        }
-
-        $validatedData = Validator::make($request->all(), [
-            'name' => ['required'],
-            'remote-address' => ['required'],
-        ])->validate();
-
-        try {
-            $client = $this->connectToRouterOS($device);
-            $client->command('/interface/ppp-client/add', $validatedData);
-
-            return response()->json(['message' => 'Perfil PPP criado com sucesso.']);
-        } catch (\Exception $e) {
-            Log::error('Error creating PPP profile: ' . $e->getMessage());
-            return response()->json(['error' => 'Error creating PPP profile'], 500);
-        }
-    }
-
-    private function connectToRouterOS(Device $device): Client
-    {
-        $config = new Config([
-            'host' => $device->ip,
-            'user' => $device->user,
-            'pass' => $device->password,
-            'port' => $device->port ?? 8728,
-            'ssh_timeout' => 60,
-        ]);
-        $client = new Client($config);
-        $client->connect();
-        return $client;
+        $normalizedName = Normalizer::normalize($name, Normalizer::FORM_D);
+        $sanitizedName = preg_replace('/\p{M}/u', '', $normalizedName);
+        return preg_replace('/[^a-zA-Z0-9_-]/', '_', $sanitizedName);
     }
 }

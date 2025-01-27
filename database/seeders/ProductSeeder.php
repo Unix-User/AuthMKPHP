@@ -23,39 +23,44 @@ class ProductSeeder extends Seeder
 
         $products = [
             [
-                'name' => 'Smartphone X',
-                'description' => 'Latest model with advanced features',
-                'price' => 999.99,
-                'image' => 'products/smartphone.jpg',
-                'tags' => 'electronics,mobile,smartphone',
+                'name' => 'Plano Básico',
+                'description' => 'Plano de internet com velocidade de até 10 Mbps.',
+                'price' => 29.99,
+                'image' => 'products/basic_plan.jpg',
+                'tags' => 'internet,plano,basico',
+                'rate' => '10m/1m', // Added rate here
             ],
             [
-                'name' => 'Laptop Pro',
-                'description' => 'High-performance laptop for professionals',
-                'price' => 1499.99,
-                'image' => 'products/laptop.jpg',
-                'tags' => 'electronics,computer,laptop',
+                'name' => 'Plano Intermediário',
+                'description' => 'Plano de internet com velocidade de até 50 Mbps.',
+                'price' => 49.99,
+                'image' => 'products/intermediate_plan.jpg',
+                'tags' => 'internet,plano,intermediario',
+                'rate' => '50m/5m', // Added rate here
             ],
             [
-                'name' => 'Wireless Earbuds',
-                'description' => 'True wireless earbuds with noise cancellation',
-                'price' => 199.99,
-                'image' => 'products/earbuds.jpg',
-                'tags' => 'electronics,audio,wireless',
+                'name' => 'Plano Premium',
+                'description' => 'Plano de internet com velocidade de até 100 Mbps.',
+                'price' => 79.99,
+                'image' => 'products/premium_plan.jpg',
+                'tags' => 'internet,plano,premium',
+                'rate' => '100m/10m', // Added rate here
             ],
             [
-                'name' => 'Smart Watch',
-                'description' => 'Fitness tracker and smartwatch in one',
-                'price' => 299.99,
-                'image' => 'products/smartwatch.jpg',
-                'tags' => 'electronics,wearable,fitness',
+                'name' => 'Plano Família',
+                'description' => 'Plano de internet com velocidade de até 200 Mbps, ideal para famílias.',
+                'price' => 99.99,
+                'image' => 'products/family_plan.jpg',
+                'tags' => 'internet,plano,familia',
+                'rate' => '200m/20m', // Added rate here
             ],
             [
-                'name' => '4K TV',
-                'description' => 'Ultra HD smart TV with HDR',
-                'price' => 799.99,
-                'image' => 'products/tv.jpg',
-                'tags' => 'electronics,television,entertainment',
+                'name' => 'Plano Gamer',
+                'description' => 'Plano de internet com alta velocidade e baixa latência, ideal para gamers.',
+                'price' => 129.99,
+                'image' => 'products/gamer_plan.jpg',
+                'tags' => 'internet,plano,gamer',
+                'rate' => '300m/30m', // Added rate here
             ],
         ];
 

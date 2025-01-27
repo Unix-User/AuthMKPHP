@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\JsonResponse;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        return Inertia::render('Users', [
-            'data' => User::all()->where('current_team_id',  '=', auth()->user()->current_team_id)
-        ]);
+        $user = $request->user();
+        if (!$user) {
+            return Response::json(['error' => 'Unauthorized'], 401);
+        }
+        $teamId = $user->current_team_id;
+        $users = User::where('current_team_id', $teamId)->get();
+        return Response::json(['data' => $users]);
     }
-    
 }

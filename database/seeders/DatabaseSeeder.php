@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Team;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,18 +20,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->withPublicTeam()->create();
 
-        $publicTeam = Team::where('name', 'Public')->first();
-
-        User::factory()->withPersonalTeam()->withPublicTeam()->create([
+        User::factory()->withPublicTeam()->withPersonalTeam()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'current_team_id' => $publicTeam->id
         ]);
 
         User::factory()->withPublicTeam()->create([
             'name' => 'Test User 2',
             'email' => 'test2@example.com',
-            'current_team_id' => $publicTeam->id
         ]);
     }
 }

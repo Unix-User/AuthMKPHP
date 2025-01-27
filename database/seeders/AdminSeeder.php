@@ -18,23 +18,28 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            $admin = User::create([
+            $admin = User::factory()->create([
                 'name' => 'Admin User',
                 'email' => env('ADMIN_EMAIL'),
                 'password' => Hash::make(env('ADMIN_PASSWORD')),
             ]);
 
             // Criar o time de admin
-            $admin->ownedTeams()->create([
+            $adminTeam = $admin->ownedTeams()->create([
                 'name' => 'Admin Team',
                 'personal_team' => true,
             ]);
 
             // Criar o time público
-            $admin->ownedTeams()->create([
+            $publicTeam = $admin->ownedTeams()->create([
                 'name' => 'Public',
                 'personal_team' => true,
             ]);
+
+            $admin->teams()->attach($adminTeam->id, ['role' => 'admin']);
+            $admin->teams()->attach($publicTeam->id, ['role' => 'admin']);
+            $admin->current_team_id = $adminTeam->id;
+            $admin->save();
         });
     }
 }

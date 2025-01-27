@@ -50,9 +50,9 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the user should have a personal team.
+     * Indicate that the user should have a personal team and set it as current team.
      */
-    public function withPersonalTeam(?callable $callback = null): static
+    public function withPersonalTeam(): static
     {
         if (! Features::hasTeamFeatures()) {
             return $this->state([]);
@@ -64,10 +64,16 @@ class UserFactory extends Factory
                     'name' => $user->name.'\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
-                ])
-                ->when(is_callable($callback), $callback),
+                ]),
             'ownedTeams'
-        );
+        )->afterCreating(function (User $user) {
+            $personalTeam = $user->ownedTeams()->where('personal_team', true)->first();
+            if ($personalTeam) {
+                $user->teams()->attach($personalTeam->id, ['role' => 'admin']);
+                $user->current_team_id = $personalTeam->id;
+                $user->save();
+            }
+        });
     }
 
     /**
@@ -78,7 +84,9 @@ class UserFactory extends Factory
         return $this->afterCreating(function (User $user) {
             $publicTeam = Team::where('name', 'Public')->first();
             if ($publicTeam) {
-                $user->teams()->attach($publicTeam->id);
+                $user->teams()->attach($publicTeam->id, ['role' => 'member']);
+                $user->current_team_id = $publicTeam->id;
+                $user->save();
             }
         });
     }
