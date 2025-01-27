@@ -1,5 +1,9 @@
 <p align="center"><a href="https://github.com/Unix-User/AuthMKPHP" target="_blank"><img src="https://user-images.githubusercontent.com/38821945/192930836-6be0ee28-7206-4651-a18c-da7e8ab99a11.svg" width="400" alt="Logotipo AuthMKPHP"></a></p>
 
+<p align="center">
+  [Español](README-ES.md) | [English](README.md)
+</p>
+
 ## Sobre AuthMKPHP
 
 AuthMKPHP é uma aplicação web construída com Laravel e Vue.js, projetada para otimizar o gerenciamento de usuários e perfis em servidores PPPoE de dispositivos Mikrotik. Ela fornece uma interface amigável para gerenciar usuários e seus dispositivos associados, aumentando a eficiência e centralizando a administração.
