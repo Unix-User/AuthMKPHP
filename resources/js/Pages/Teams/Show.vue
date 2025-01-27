@@ -29,6 +29,7 @@ defineProps({
                     :team="team"
                     :available-roles="availableRoles"
                     :user-permissions="permissions"
+                    id="manager"
                 />
 
                 <template v-if="permissions.canDeleteTeam && ! team.personal_team">
