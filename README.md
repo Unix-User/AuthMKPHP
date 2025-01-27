@@ -12,7 +12,7 @@ This section guides you through setting up AuthMKPHP on your system.
 
 Before you begin, ensure you have the following installed and configured on your system:
 
-* **PHP:** Version 8.1 or higher.  The `composer.json` file specifies `^8.2.0`, so ensure you have at least PHP 8.2 installed.
+* **PHP:** Version 8.2 or higher. Additionally, ensure that the following PHP extensions are enabled: BCrypt, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML, and sockets. The `composer.json` file specifies `^8.2.0`, so ensure you have at least PHP 8.2 installed.
 * **Composer:** The PHP dependency manager.  You can download it from [https://getcomposer.org/](https://getcomposer.org/).
 * **Node.js and npm:**  Node.js is a JavaScript runtime environment, and npm is its package manager. Download them from [https://nodejs.org/](https://nodejs.org/).
 
@@ -62,12 +62,13 @@ To deploy AuthMKPHP to a production environment, follow these steps:
 
 2. **Run database migrations with seeding:** Run the database migrations and seed the database with initial data (if required):
    ```bash
-   php artisan migrate --seed
+   php artisan migrate:fresh
+   php artisan db:seed
    ```
 
 3. **Compile assets for production:** Compile the frontend assets for optimized performance in production:
    ```bash
-   npm run prod
+   npm run build
    ```
 
 4. **Deploy:** Deploy the application to your chosen web server.  The deployment process will vary depending on your hosting provider and infrastructure.  Consult your hosting provider's documentation for specific instructions.
@@ -83,7 +84,7 @@ AuthMKPHP offers the following features (with some still under development):
 - [ ] **Telegram Chat Integration:** Integration with Telegram for notifications and communication is planned.
 - [ ] **PagSeguro API Integration:** Integration with the PagSeguro payment gateway is planned.
 - [ ] **Mercado Pago API Integration:** Integration with the Mercado Pago payment gateway is planned.
-- [ ] **Mikrotik API Integration:** Robust integration with the Mikrotik API for device management.
+- [x] **Mikrotik API Integration:** Robust integration with the Mikrotik API for device management.
 
 
 ## Sponsors
@@ -103,4 +104,3 @@ We encourage contributions to AuthMKPHP!  Please review our contribution guideli
 ## Security Vulnerabilities
 
 If you discover a security vulnerability, please report it responsibly by creating an issue.
-
