@@ -45,17 +45,22 @@ These steps will set up AuthMKPHP for local development.
     * **API Keys:** If the application uses any external APIs (e.g., payment gateways, messaging services), you'll need to provide the necessary API keys here.
     * **Other Settings:**  Other settings may include application URLs, email configurations, and other application-specific parameters.  Refer to the `.env.example` file for a complete list of variables and their descriptions.
 
-4. **Generate application key:** Generate a unique application key for security:
+4. **Link storage directory:** Create the symbolic link for the storage directory to make your uploaded files accessible from the web:
+   ```bash
+   php artisan storage:link
+   ```
+
+5. **Generate application key:** Generate a unique application key for security:
    ```bash
    php artisan key:generate
    ```
 
-5. **Run database migrations:** Apply the database migrations to create the necessary tables:
+6. **Run database migrations:** Apply the database migrations to create the necessary tables:
    ```bash
    php artisan migrate
    ```
 
-6. **Start the development server:** Start the development server to run the application:
+7. **Start the development server:** Start the development server to run the application:
    ```bash
    npm run dev
    ```

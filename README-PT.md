@@ -45,17 +45,22 @@ Estas etapas configurarão o AuthMKPHP para desenvolvimento local.
     * **Chaves de API:** Se a aplicação usar alguma API externa (por exemplo, gateways de pagamento, serviços de mensagens), você precisará fornecer as chaves de API necessárias aqui.
     * **Outras Configurações:** Outras configurações podem incluir URLs da aplicação, configurações de e-mail e outros parâmetros específicos da aplicação. Consulte o arquivo `.env.example` para obter uma lista completa de variáveis e suas descrições.
 
-4. **Gere a chave da aplicação:** Gere uma chave de aplicação única para segurança:
+4. **Vincule o diretório de armazenamento:** Crie o link simbólico para o diretório de armazenamento para tornar os arquivos enviados acessíveis a partir da web:
+   ```bash
+   php artisan storage:link
+   ```
+
+5. **Gere a chave da aplicação:** Gere uma chave de aplicação única para segurança:
    ```bash
    php artisan key:generate
    ```
 
-5. **Execute as migrações do banco de dados:** Aplique as migrações do banco de dados para criar as tabelas necessárias:
+6. **Execute as migrações do banco de dados:** Aplique as migrações do banco de dados para criar as tabelas necessárias:
    ```bash
    php artisan migrate
    ```
 
-6. **Inicie o servidor de desenvolvimento:** Inicie o servidor de desenvolvimento para executar a aplicação:
+7. **Inicie o servidor de desenvolvimento:** Inicie o servidor de desenvolvimento para executar a aplicação:
    ```bash
    npm run dev
    ```
