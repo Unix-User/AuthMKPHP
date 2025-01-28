@@ -10,10 +10,10 @@ import ProductsTable from '@/Components/ProductsTable.vue';
 </script>
 
 <template>
-    <AppLayout title="Products">
+    <AppLayout title="Produtos">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Products
+                Produtos
             </h2>
         </template>
 
@@ -22,11 +22,11 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                         <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
-                            Product Management
+                            Gerenciamento de Produtos
                         </h1>
 
                         <p class="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Here you can manage the products in the system. You can add new products, edit existing information, or remove products.
+                            Aqui você pode gerenciar os produtos no sistema. Você pode adicionar novos produtos, editar informações existentes ou remover produtos.
                         </p>
                     </div>
 
@@ -34,20 +34,20 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                         <div>
                             <div class="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-gray-400">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                 </svg>
                                 <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-white">
-                                    <a href="#">Add New Product</a>
+                                    <a href="#">Adicionar Novo Produto</a>
                                 </h2>
                             </div>
 
                             <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Click the button below to add a new product to the system.
+                                Clique no botão abaixo para adicionar um novo produto ao sistema.
                             </p>
 
                             <p class="mt-4 text-sm">
                                 <PrimaryButton @click="openModal()" class="mb-4">
-                                    Add New Product
+                                    Adicionar Novo Produto
                                 </PrimaryButton>
                             </p>
                         </div>
@@ -58,12 +58,12 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z" />
                                 </svg>
                                 <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-white">
-                                    <a href="#">Product List</a>
+                                    <a href="#">Lista de Produtos</a>
                                 </h2>
                             </div>
 
                             <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Below is the list of all products currently in the system.
+                                Abaixo está a lista de todos os produtos atualmente no sistema.
                             </p>
                         </div>
                     </div>
@@ -77,25 +77,25 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                             <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div class="">
                                     <div class="mb-4">
-                                        <InputLabel for="name" value="Name" />
+                                        <InputLabel for="name" value="Nome" />
                                         <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full"
                                             autocomplete="name" />
                                         <InputError :message="$page.props.errors.name" class="mt-2" />
                                     </div>
                                     <div class="mb-4">
-                                        <InputLabel for="description" value="Description" />
+                                        <InputLabel for="description" value="Descrição" />
                                         <TextInput id="description" v-model="form.description" type="text"
                                             class="mt-1 block w-full" autocomplete="description" />
                                         <InputError :message="$page.props.errors.description" class="mt-2" />
                                     </div>
                                     <div class="mb-4">
-                                        <InputLabel for="price" value="Price" />
+                                        <InputLabel for="price" value="Preço" />
                                         <TextInput id="price" v-model="form.price" type="number"
                                             class="mt-1 block w-full" autocomplete="price" />
                                         <InputError :message="$page.props.errors.price" class="mt-2" />
                                     </div>
                                     <div class="mb-4">
-                                        <InputLabel for="rate" value="Rate" />
+                                        <InputLabel for="rate" value="Taxa" />
                                         <TextInput id="rate" v-model="form.rate" type="number"
                                             class="mt-1 block w-full" autocomplete="rate" />
                                         <InputError :message="$page.props.errors.rate" class="mt-2" />
@@ -107,7 +107,7 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                                         <InputError :message="$page.props.errors.tags" class="mt-2" />
                                     </div>
                                     <div class="mb-4">
-                                        <InputLabel for="image" value="Image" />
+                                        <InputLabel for="image" value="Imagem" />
                                         <div v-if="!form.image" class="col-span-6 sm:col-span-4">
                                             <input ref="imageInput" type="file" class="hidden"
                                                 @change="updateImagePreview">
@@ -123,9 +123,9 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                                                 :style="'background-image: url(\'storage/images/' + form.image + '\');'" />
                                         </div>
                                         <SecondaryButton class="mt-2 mr-2" type="button"
-                                            @click.prevent="selectNewImage">Select A New Image</SecondaryButton>
+                                            @click.prevent="selectNewImage">Selecionar uma Nova Imagem</SecondaryButton>
                                         <SecondaryButton type="button" class="mt-2" @click.prevent="deleteImage">
-                                            Remove Image</SecondaryButton>
+                                            Remover Imagem</SecondaryButton>
                                         <InputError :message="$page.props.errors.image" class="mt-2" />
                                     </div>
                                 </div>
@@ -134,16 +134,16 @@ import ProductsTable from '@/Components/ProductsTable.vue';
                                 <PrimaryButton type="button"
                                     class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                                     v-show="!editMode" @click="save(form)">
-                                    Save
+                                    Salvar
                                 </PrimaryButton>
                                 <PrimaryButton type="button"
                                     class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                                     v-show="editMode" @click="update(form)">
-                                    Update
+                                    Atualizar
                                 </PrimaryButton>
                                 <SecondaryButton @click="closeModal()" type="button"
                                     class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white dark:bg-gray-800 text-base leading-6 font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                                    Cancel
+                                    Cancelar
                                 </SecondaryButton>
                             </div>
                         </form>
@@ -164,7 +164,7 @@ export default {
             form: {
                 name: '',
                 price: 0,
-                rate: 0, // Added rate here
+                rate: 0, // Taxa adicionada aqui
                 description: '',
                 team_id: '',
                 image: null,
@@ -247,7 +247,7 @@ export default {
             this.closeModal();
         },
         deleteRow(data) {
-            if (!confirm('Are you sure you want to delete this product?')) return;
+            if (!confirm('Tem certeza que deseja excluir este produto?')) return;
             this.$inertia.delete(`/products/${data.id}`, {
                 preserveState: true,
                 preserveScroll: true,
@@ -262,7 +262,7 @@ export default {
                 });
                 reader.readAsDataURL(this.$refs.imageInput.files[0]);
             } catch (error) {
-                console.error(`An error has occurred while reading the image file: ${error}`);
+                console.error(`Ocorreu um erro ao ler o arquivo de imagem: ${error}`);
             }
         },
         selectNewImage() {
@@ -271,10 +271,10 @@ export default {
                 if (this.$refs.imageInput && typeof this.$refs.imageInput.click === 'function') {
                     this.$refs.imageInput.click();
                 } else {
-                    console.error(`The image input element is not available`);
+                    console.error(`O elemento de entrada de imagem não está disponível`);
                 }
             } catch (error) {
-                console.error(`An error has occurred while selecting the image: ${error}`);
+                console.error(`Ocorreu um erro ao selecionar a imagem: ${error}`);
             }
         },
         deleteImage() {
