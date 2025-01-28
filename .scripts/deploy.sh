@@ -8,10 +8,6 @@ echo "Deployment started ..."
 echo "Putting application into maintenance mode..."
 (php artisan down) || true
 
-# Pull the latest version of the app
-echo "Pulling latest code changes..."
-git pull
-
 # Install composer dependencies
 echo "Installing composer dependencies..."
 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
