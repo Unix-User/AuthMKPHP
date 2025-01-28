@@ -225,6 +225,18 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('showcase')" :active="route().current('showcase')">
+                            Showcase
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('products')" :active="route().current('products')">
+                            Produtos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('devices')" :active="route().current('devices')">
+                            Devices
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('users')" :active="route().current('users')">
+                            Users
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -345,4 +357,3 @@ const logout = () => {
     -ms-overflow-style: none; /* Oculta a barra de rolagem */
 }
 </style>
-
