@@ -44,30 +44,21 @@
           </button>
         </div>
       </div>
-      <div v-if="isMobile" class="mt-4">
-        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-          <p class="text-sm text-gray-500 dark:text-gray-400">IKEv2: {{ row.ikev2 }}</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">User: {{ row.user }}</p>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue';
-
 export default {
   props: ['devicesData'],
   emits: ['edit', 'delete', 'sync', 'list'],
   setup(props, { emit }) {
-    const isMobile = computed(() => window.innerWidth < 768);
 
     const handleRowClick = (row) => {
       emit('list', row);
     };
 
-    return { isMobile, handleRowClick };
+    return { handleRowClick };
   },
 };
 </script>
