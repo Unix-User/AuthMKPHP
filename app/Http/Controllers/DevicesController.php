@@ -76,7 +76,7 @@ class DevicesController extends Controller
     }
 
     /**
-     * Display the specified resource and sync device users and profiles.
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return JsonResponse
@@ -89,6 +89,29 @@ class DevicesController extends Controller
             return response()->json(['error' => 'Device not found'], 404);
         }
 
+        $syncResult = $this->syncDevice($device);
+
+        if (isset($syncResult['error'])) {
+            return response()->json(['error' => $syncResult['error']], 500);
+        }
+
+        return response()->json([
+            'message' => 'Device data retrieved successfully.',
+            'device' => $syncResult['device'],
+            'pppUsers' => $syncResult['pppUsers'],
+            'pppProfiles' => $syncResult['pppProfiles'],
+        ]);
+    }
+
+
+    /**
+     * Sync device users and profiles.
+     *
+     * @param  Device  $device
+     * @return array
+     */
+    private function syncDevice(Device $device): array
+    {
         try {
             $teamId = $device->team_id;
             $users = User::where('current_team_id', $teamId)->get();
@@ -145,17 +168,17 @@ class DevicesController extends Controller
             $pppProfiles = $this->routerOSService->listPppProfiles($device);
             $deviceInfo = $this->routerOSService->show($device);
 
-            return response()->json([
-                'message' => 'Device users and profiles synced and data retrieved successfully.',
+            return [
                 'pppUsers' => $pppUsers,
                 'device' => $deviceInfo,
                 'pppProfiles' => $pppProfiles,
-            ]);
+            ];
         } catch (Throwable $e) {
-            Log::error('Error fetching or syncing device resource', ['device_id' => $id, 'error' => $e->getMessage()]);
-            return response()->json(['error' => 'Error fetching or syncing device resource: ' . $e->getMessage()], 500);
+            Log::error('Error fetching or syncing device resource', ['device_id' => $device->id, 'error' => $e->getMessage()]);
+            return ['error' => 'Error fetching or syncing device resource: ' . $e->getMessage()];
         }
     }
+
 
     private function getDevice(int $id): ?Device
     {

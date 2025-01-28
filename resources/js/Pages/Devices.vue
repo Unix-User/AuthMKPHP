@@ -40,10 +40,6 @@ const fetchData = async () => {
     }
 };
 
-const syncData = async () => {
-
-}
-
 onMounted(fetchData);
 
 const openModal = () => {
@@ -103,10 +99,13 @@ const edit = (device) => {
     openModal();
 };
 
-const view = (device) => {
-    form.value = { ...device };
-    viewMode.value = true;
-    openModal();
+const sync = async (device) => {
+    try {
+        await axios.get(`/device/${device.id}`);
+        await fetchData(); // Refresh the device list after sync
+    } catch (error) {
+        console.error("Error syncing device:", error);
+    }
 };
 
 const list = (device) => {
@@ -201,7 +200,7 @@ const deleteRow = async (device) => {
                             <p>Loading...</p>
                         </div>
                         <div v-else-if="data && data.length > 0">
-                            <DevicesTable :devicesData="data" @edit="edit" @view="view" @delete="deleteRow"
+                            <DevicesTable :devicesData="data" @edit="edit" @delete="deleteRow"
                                 @list="list" @sync="sync" />
                         </div>
                         <div v-else class="text-center mt-12">

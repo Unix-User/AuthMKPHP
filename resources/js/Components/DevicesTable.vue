@@ -17,9 +17,10 @@
           </div>
         </div>
         <div class="flex space-x-1 mt-3 md:mt-0">
-          <button @click.stop="$emit('sync', row)"
-            class="p-3 rounded-md bg-green-500 hover:bg-green-600 text-white focus:outline-none focus:ring-2 focus:ring-green-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 512 512" fill="currentColor">
+          <button @click.stop="handleSync(row)"
+            class="p-3 rounded-md bg-green-500 hover:bg-green-600 text-white focus:outline-none focus:ring-2 focus:ring-green-300"
+            :disabled="syncing[row.id]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" viewBox="0 0 512 512" fill="currentColor" :class="{'animate-spin': syncing[row.id]}">
               <path
                 d="M142.9 142.9c-17.5 17.5-30.1 38-37.8 59.8c-5.9 16.7-24.2 25.4-40.8 19.5s-25.4-24.2-19.5-40.8C55.6 150.7 73.2 122 97.6 97.6c87.2-87.2 228.3-87.5 315.8-1L455 55c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2l0 128c0 13.3-10.7 24-24 24l-8.4 0c0 0 0 0 0 0L344 224c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l41.1-41.1c-62.6-61.5-163.1-61.2-225.3 1zM16 312c0-13.3 10.7-24 24-24l7.6 0 .7 0L168 288c9.7 0 18.5 5.8 22.2 14.8s1.7 19.3-5.2 26.2l-41.1 41.1c62.6 61.5 163.1 61.2 225.3-1c17.5-17.5 30.1-38 37.8-59.8c5.9-16.7 24.2-25.4 40.8-19.5s25.4 24.2 19.5 40.8c-10.8 30.6-28.4 59.3-52.9 83.8c-87.2 87.2-228.3 87.5-315.8 1L57 457c-6.9 6.9-17.2 8.9-26.2 5.2S16 449.7 16 440l0-119.6 0-.7 0-7.6z" />
             </svg>
@@ -46,16 +47,45 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
   props: ['devicesData'],
   emits: ['edit', 'delete', 'sync', 'list'],
   setup(props, { emit }) {
+    const syncing = ref({});
 
     const handleRowClick = (row) => {
       emit('list', row);
     };
 
-    return { handleRowClick };
+    const handleSync = (row) => {
+      if (syncing.value[row.id]) return;
+      syncing.value = { ...syncing.value, [row.id]: true };
+      emit('sync', row);
+      // In a real application, you would reset syncing[row.id] to false after the sync operation completes,
+      // likely in the parent component after handling the 'sync' event and receiving a response.
+      // For example:
+      setTimeout(() => {
+        syncing.value = { ...syncing.value, [row.id]: false };
+      }, 2000); // Simulate a 2-second sync operation
+    };
+
+    return { handleRowClick, handleSync, syncing };
   },
 };
 </script>
+<style scoped>
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
