@@ -28,7 +28,9 @@ class RouterOSService
             'user' => $device->user,
             'pass' => $device->password,
             'port' => $device->port ?? 8728,
-            'ssh_timeout' => 60,
+            'timeout' => 10,
+            'attempts' => 3,
+            'delay' => 1,
         ]);
 
         $client = new Client($config);
@@ -134,7 +136,19 @@ class RouterOSService
      */
     public function listPppUsers(Device $device): array
     {
-        return $this->executeRouterOSRequest($device, fn (Client $client) => $client->query('/ppp/secret/print')->read());
+        return $this->executeRouterOSRequest($device, function (Client $client) {
+            $responseIterator = $client->query('/ppp/secret/print')->readAsIterator();
+            $users = [];
+            for ($responseIterator->rewind(); $responseIterator->valid(); $responseIterator->next()) {
+                try {
+                    $user = $responseIterator->current();
+                    $users[] = $user;
+                } catch (\Exception $exception) {
+                    continue;
+                }
+            }
+            return $users;
+        });
     }
 
     /**
@@ -146,7 +160,19 @@ class RouterOSService
      */
     public function listPppProfiles(Device $device): array
     {
-        return $this->executeRouterOSRequest($device, fn (Client $client) => $client->query('/ppp/profile/print')->read());
+        return $this->executeRouterOSRequest($device, function (Client $client) {
+            $responseIterator = $client->query('/ppp/profile/print')->readAsIterator();
+            $profiles = [];
+            for ($responseIterator->rewind(); $responseIterator->valid(); $responseIterator->next()) {
+                try {
+                    $profile = $responseIterator->current();
+                    $profiles[] = $profile;
+                } catch (\Exception $exception) {
+                    continue;
+                }
+            }
+            return $profiles;
+        });
     }
 
     /**

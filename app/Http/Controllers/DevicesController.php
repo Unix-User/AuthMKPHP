@@ -131,9 +131,42 @@ class DevicesController extends Controller
         $users = User::where('current_team_id', $teamId)->get();
         $products = Product::where('team_id', $teamId)->get();
 
+        // Retrieve device information
+        try {
+            $deviceInfo = $this->routerOSService->show($device);
+        } catch (Throwable $e) {
+            Log::error('RouterOS error retrieving device info', [
+                'device_id' => $device->id,
+                'device_name' => $device->name,
+                'error' => $e->getMessage(),
+            ]);
+            $deviceInfo = null; // Or handle as needed, e.g., throw exception or return partial data
+        }
+
+
         // Retrieve PPP users and profiles directly from the RouterOS device
-        $pppUsersOnDeviceList = $this->routerOSService->listPppUsers($device);
-        $pppProfilesOnDeviceList = $this->routerOSService->listPppProfiles($device);
+        try {
+            $pppUsersOnDeviceList = $this->routerOSService->listPppUsers($device);
+        } catch (Throwable $e) {
+            Log::error('RouterOS error retrieving PPP users', [
+                'device_id' => $device->id,
+                'device_name' => $device->name,
+                'error' => $e->getMessage(),
+            ]);
+            $pppUsersOnDeviceList = []; // Or handle as needed
+        }
+
+        try {
+            $pppProfilesOnDeviceList = $this->routerOSService->listPppProfiles($device);
+        } catch (Throwable $e) {
+            Log::error('RouterOS error retrieving PPP profiles', [
+                'device_id' => $device->id,
+                'device_name' => $device->name,
+                'error' => $e->getMessage(),
+            ]);
+            $pppProfilesOnDeviceList = []; // Or handle as needed
+        }
+
 
         // Extract names for easier comparison
         $pppUsersOnDevice = collect($pppUsersOnDeviceList)->pluck('name')->toArray();
@@ -143,9 +176,6 @@ class DevicesController extends Controller
         $this->syncPppProfiles($device, $products, $pppProfilesOnDevice);
         // Sync PPP users based on users
         $this->syncPppUsers($device, $users, $pppUsersOnDevice);
-
-        // Retrieve device information again to ensure latest data
-        $deviceInfo = $this->routerOSService->show($device);
 
         return [
             'pppUsers' => $pppUsersOnDeviceList,
@@ -177,10 +207,11 @@ class DevicesController extends Controller
                     $request->replace($profileData);
                     $this->routerOSService->createPppProfile($request, $device);
                 } catch (Throwable $e) {
-                    Log::error('Error creating PPP profile', [
+                    Log::error('RouterOS error creating PPP profile', [
                         'product_id' => $product->id,
                         'profile_name' => $product->name,
                         'device_id' => $device->id,
+                        'device_name' => $device->name,
                         'error' => $e->getMessage(),
                         'rate_limit' => $profileData['rate-limit'],
                     ]);
@@ -215,10 +246,11 @@ class DevicesController extends Controller
                     $request->replace($userData);
                     $this->routerOSService->createPppUser($request, $device);
                 } catch (Throwable $e) {
-                    Log::error('Error creating PPP user', [
+                    Log::error('RouterOS error creating PPP user', [
                         'user_id' => $user->id,
                         'username' => $user->name,
                         'device_id' => $device->id,
+                        'device_name' => $device->name,
                         'error' => $e->getMessage(),
                         'profile' => $defaultProfileName, // Log the profile name as well
                     ]);
