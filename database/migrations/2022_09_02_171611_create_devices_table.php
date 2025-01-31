@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->ipAddress('ip');
+            $table->ipAddress('ip')->unique();
             $table->boolean('ikev2')->nullable();
             $table->string('user');
             $table->string('password');

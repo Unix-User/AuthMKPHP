@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'name', 'description', 'image', 'price', 'rate', 'team_id', 'tags',
     ];
 
-
+    public function subscriptions()
+    {
+        return $this->hasMany(UserSubscription::class);
+    }
 }
